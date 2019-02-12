@@ -1,0 +1,441 @@
+<div *ngIf="visible==true ; then personnal else professionnal"></div>
+
+<ng-template #personnal>   
+    <div class="container-fluid col-md-9 center">   
+          <div id="theForm" class="panel panel-primary">
+            <div class="panel-heading">  <h3><u>Informations personnels</u></h3></div>
+            <div class="panel-body">
+            <form #f="ngForm" name="theForm" (submit)="addPers(f)"  enctype="multipart/form-data" method="POST">
+                
+              <div class="row">
+                  <div class="alert alert-warning btn-block"  *ngIf="isIn==false">
+                      <strong>Veuillez choisir un format de fichier Image correct (jpg,png,gif,jpeg)</strong>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <span class="btn-file ace-icon fa fa-plus-circle bigger-110 btn btn-sm btn-success " style="font-size:17px">
+                        <b>Photo d'identification</b> <input type="file" id="avatar" name="avatar" (change)="check()" accept="Image/*">
+                    </span>
+                  </div>
+              </div>   
+
+                    <div class="row">
+                      <div class="form-group col-sm-6">
+                          <label>Nom:</label>
+                            <input type="text"
+                                    class="form-control"
+                                    name="nom"
+                                    [(ngModel)]="personne.nom"
+                                    #nomPers="ngModel"
+                                    required
+                                    pattern="^[a-zA-Z]+$" placeholder="Nom" 
+                                    autocomplete="off">
+                              <span style="color:green" class="help-block danger" *ngIf="nomPers.errors?.required && nomPers.touched">
+                                    Le <b> nom </b> est obligatoire !!
+                              </span>
+                      </div>
+                      <div class="form-group col-sm-6">
+                          <label>Prénom:</label>
+                              <input type="text"
+                                    class="form-control"
+                                    name="prenom"
+                                    [(ngModel)]="personne.prenom"
+                                    #prenomPers="ngModel"
+                                    required
+                                    placeholder="Prénom" 
+                                    autocomplete="off">
+                              <span style="color:green" class="help-block danger" *ngIf="prenomPers.errors?.required && prenomPers.touched">
+                                Le <b> Prénom </b> est obligatoire !!
+                              </span>
+                      </div>
+                  </div>
+
+
+                  <div class="row">
+                      <div class="form-group col-sm-4">
+                          <label>Adresse:</label>
+                          <input type="text"
+                                class="form-control"
+                                name="adresse"
+                                [(ngModel)]="personne.adresse"
+                                #adresse="ngModel"
+                                required
+                                placeholder="Adresse" 
+                                autocomplete="off">
+                          <span style="color:green" class="help-block danger" *ngIf="adresse.errors?.required && adresse.touched">
+                            <b> Adresse </b>obligatoire !!
+                          </span>
+                      </div>
+                      <div class="form-group col-sm-4">
+                        <label for="province">Province</label>
+                        <select class="form-control"                                                                          
+                                name="province"
+                                [(ngModel)]="prov"
+                                #province="ngModel"
+                                required>
+                                <option value="Antananarivo">Antananarivo</option>
+                                <option value="Antsiranana">Antsiranana</option>
+                                <option value="Antsirabe">Antsirabe</option>
+                                <option value="Fianarantsoa">Fianarantsoa</option>
+                                <option value="Mahajanga">Mahajanga</option>
+                                <option value="Toamasina">Toamasina</option>
+                                <option value="Toliara">Toliara</option>
+                                
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-4">
+                              <label for="dateNaissance">Date de naissance</label>
+                              <input type="text" 
+                                      class="form-control" 
+                                      bsDatepicker 
+                                      [bsConfig]="datePickerConfig" 
+                                      id="dateNaiss"  
+                                      [(ngModel)]="stringDate"
+                                      #dateNaiss="ngModel"
+                                      name="dateNaiss"
+                                      required
+                                      autocomplete="off"
+                                      placeholder="Date de naissance">
+                      </div>
+                  </div>
+
+                  <div class="row">
+                    
+                  </div> 
+
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label>Numéro Téléphone:</label>
+                        <input type="text"
+                              class="form-control"
+                              name="numTel"
+                              [(ngModel)]="personne.numTel"
+                              #numTel="ngModel"
+                              required
+                              pattern="[0-9]{10}"
+                              autocomplete="off"
+                              placeholder="Numéro téléphone"
+                              (change)="onChangeNumber()">
+                        <span class="help-block danger" *ngIf="numTel.errors?.required && numTel.touched" style="color:green">
+                          <b> Numéro </b> obligatoire !!
+                        </span>
+                        <span style="color:red" class="help-block danger" *ngIf="numTel.errors?.pattern && numTel.touched">
+                            Le numéro doit seulement contenir des Chiffres (0-9) et minimum 10 chiifres !
+                        </span>
+                        <span  class="alert alert-danger btn-block" *ngIf="existingNumber">
+                          Ce numéro existe déjà (Vous êtes déjà inscrit) !
+                        </span>
+                      </div>
+                    <div class="form-group col-sm-4">
+                        <label>Adresse E-Mail:</label>
+                        <input type="text"
+                              class="form-control"
+                              name="email"
+                              [(ngModel)]="personne.email"
+                              #email="ngModel"
+                              required
+                              pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}"
+                              autocomplete="off"
+                              placeholder="Adresse email">
+                        <span style="color:red" class="help-block danger" *ngIf="email.errors?.pattern && email.touched">
+                            Adresse <b> E-Mail</b> invvalide!
+                        </span>
+                      </div>
+                    <div class="form-group col-sm-4">
+                        <label>Mot de Passe:</label>
+                        <input type="password"
+                              class="form-control"
+                              name="passwordPers"
+                              [(ngModel)]="personne.password"
+                              #passwordPers="ngModel"
+                              required
+                              autocomplete="off"
+                              placeholder="Mot de Passe" 
+                              required>
+                          <span class="help-block danger" *ngIf="passwordPers.errors?.required && passwordPers.touched" style="color:green">
+                                  <b>Password</b> obligatoire!
+                          </span>
+                    </div>   
+                </div> 
+                    
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <label>Nationalité :</label>
+                        <select class="form-control"
+                                name="nationalite"
+                                [(ngModel)]="personne.nationalite"
+                                #nationalite="ngModel"
+                                required >
+                                <option value="Malagasy" selected><b>Malagasy</b></option>
+                                <option value="autre"><b>Autre nationalité</b></option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Etat civil :</label>
+                        <select class="form-control"
+                                name="civilite"
+                                [(ngModel)]="personne.civilite"
+                                #civilite="ngModel"
+                                required>
+                                <option value="Marié">Marié</option>
+                                <option value="Divorcé">Divorcé</option>
+                                <option value="Célibataire">Célibataire</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Nombre d'enfants :</label>
+                        <input type="text"
+                              class="form-control"
+                              name="nbEnfants"
+                              [(ngModel)]="personne.nbEnfants"
+                              #nbEnfants="ngModel"
+                              required
+                              placeholder="Nombre d'enfants" 
+                              autocomplete="off">
+                    </div>
+                </div>
+
+                        <button
+                            class="btn btn-info btn-sm pull-right"
+                            [disabled]="existingNumber || f.invalid ">Enregistrer informations personnels
+                        </button>
+                </form>
+              </div>
+          </div>
+    </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ng-template #professionnal>
+    <div class="container-fluid col-md-9 center">   
+      <div id="theForm" class="panel panel-danger">
+        <div class="panel-heading">  <h3><u>Informations perofessionnels</u></h3></div>
+        <div class="panel-body">
+        <form #f="ngForm" name="theForm" (submit)="addPers(f)"  enctype="multipart/form-data" method="POST">
+            
+          <div class="row">
+              <div class="alert alert-warning btn-block"  *ngIf="isIn==false">
+                  <strong>Veuillez choisir un format de fichier Image correct (jpg,png,gif,jpeg)</strong>
+              </div>
+              <div class="form-group col-sm-6">
+                <span class="btn-file ace-icon fa fa-plus-circle bigger-110 btn btn-sm btn-success " style="font-size:17px">
+                    <b>Photo d'identification</b> <input type="file" id="avatar" name="avatar" (change)="check()" accept="Image/*">
+                </span>
+              </div>
+          </div>   
+
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                      <label>Nom:</label>
+                        <input type="text"
+                                class="form-control"
+                                name="nom"
+                                [(ngModel)]="personne.nom"
+                                #nomPers="ngModel"
+                                required
+                                pattern="^[a-zA-Z]+$" placeholder="Nom" 
+                                autocomplete="off">
+                          <span style="color:green" class="help-block danger" *ngIf="nomPers.errors?.required && nomPers.touched">
+                                Le <b> nom </b> est obligatoire !!
+                          </span>
+                  </div>
+                  <div class="form-group col-sm-6">
+                      <label>Prénom:</label>
+                          <input type="text"
+                                class="form-control"
+                                name="prenom"
+                                [(ngModel)]="personne.prenom"
+                                #prenomPers="ngModel"
+                                required
+                                placeholder="Prénom" 
+                                autocomplete="off">
+                          <span style="color:green" class="help-block danger" *ngIf="prenomPers.errors?.required && prenomPers.touched">
+                            Le <b> Prénom </b> est obligatoire !!
+                          </span>
+                  </div>
+              </div>
+
+
+              <div class="row">
+                  <div class="form-group col-sm-4">
+                      <label>Adresse:</label>
+                      <input type="text"
+                            class="form-control"
+                            name="adresse"
+                            [(ngModel)]="personne.adresse"
+                            #adresse="ngModel"
+                            required
+                            placeholder="Adresse" 
+                            autocomplete="off">
+                      <span style="color:green" class="help-block danger" *ngIf="adresse.errors?.required && adresse.touched">
+                        <b> Adresse </b>obligatoire !!
+                      </span>
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label for="province">Province</label>
+                    <select class="form-control"                                                                          
+                            name="province"
+                            [(ngModel)]="prov"
+                            #province="ngModel"
+                            required>
+                            <option value="Antananarivo">Antananarivo</option>
+                            <option value="Antsiranana">Antsiranana</option>
+                            <option value="Antsirabe">Antsirabe</option>
+                            <option value="Fianarantsoa">Fianarantsoa</option>
+                            <option value="Mahajanga">Mahajanga</option>
+                            <option value="Toamasina">Toamasina</option>
+                            <option value="Toliara">Toliara</option>
+                            
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-4">
+                          <label for="dateNaissance">Date de naissance</label>
+                          <input type="text" 
+                                  class="form-control" 
+                                  bsDatepicker 
+                                  [bsConfig]="datePickerConfig" 
+                                  id="dateNaiss"  
+                                  [(ngModel)]="stringDate"
+                                  #dateNaiss="ngModel"
+                                  name="dateNaiss"
+                                  required
+                                  autocomplete="off"
+                                  placeholder="Date de naissance">
+                  </div>
+              </div>
+
+              <div class="row">
+                
+              </div> 
+
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label>Numéro Téléphone:</label>
+                    <input type="text"
+                          class="form-control"
+                          name="numTel"
+                          [(ngModel)]="personne.numTel"
+                          #numTel="ngModel"
+                          required
+                          pattern="[0-9]{10}"
+                          autocomplete="off"
+                          placeholder="Numéro téléphone"
+                          (change)="onChangeNumber()">
+                    <span class="help-block danger" *ngIf="numTel.errors?.required && numTel.touched" style="color:green">
+                      <b> Numéro </b> obligatoire !!
+                    </span>
+                    <span style="color:red" class="help-block danger" *ngIf="numTel.errors?.pattern && numTel.touched">
+                        Le numéro doit seulement contenir des Chiffres (0-9) et minimum 10 chiifres !
+                    </span>
+                    <span  class="alert alert-danger btn-block" *ngIf="existingNumber">
+                      Ce numéro existe déjà (Vous êtes déjà inscrit) !
+                    </span>
+                  </div>
+                <div class="form-group col-sm-4">
+                    <label>Adresse E-Mail:</label>
+                    <input type="text"
+                          class="form-control"
+                          name="email"
+                          [(ngModel)]="personne.email"
+                          #email="ngModel"
+                          required
+                          pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}"
+                          autocomplete="off"
+                          placeholder="Adresse email">
+                    <span style="color:red" class="help-block danger" *ngIf="email.errors?.pattern && email.touched">
+                        Adresse <b> E-Mail</b> invvalide!
+                    </span>
+                  </div>
+                <div class="form-group col-sm-4">
+                    <label>Mot de Passe:</label>
+                    <input type="password"
+                          class="form-control"
+                          name="passwordPers"
+                          [(ngModel)]="personne.password"
+                          #passwordPers="ngModel"
+                          required
+                          autocomplete="off"
+                          placeholder="Mot de Passe" 
+                          required>
+                      <span class="help-block danger" *ngIf="passwordPers.errors?.required && passwordPers.touched" style="color:green">
+                              <b>Password</b> obligatoire!
+                      </span>
+                </div>   
+            </div> 
+                
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <label>Nationalité :</label>
+                    <select class="form-control"
+                            name="nationalite"
+                            [(ngModel)]="personne.nationalite"
+                            #nationalite="ngModel"
+                            required >
+                            <option value="Malagasy" selected><b>Malagasy</b></option>
+                            <option value="autre"><b>Autre nationalité</b></option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Etat civil :</label>
+                    <select class="form-control"
+                            name="civilite"
+                            [(ngModel)]="personne.civilite"
+                            #civilite="ngModel"
+                            required>
+                            <option value="Marié">Marié</option>
+                            <option value="Divorcé">Divorcé</option>
+                            <option value="Célibataire">Célibataire</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Nombre d'enfants :</label>
+                    <input type="text"
+                          class="form-control"
+                          name="nbEnfants"
+                          [(ngModel)]="personne.nbEnfants"
+                          #nbEnfants="ngModel"
+                          required
+                          placeholder="Nombre d'enfants" 
+                          autocomplete="off">
+                </div>
+            </div>
+
+                    <button
+                        class="btn btn-info btn-sm pull-right"
+                        [disabled]="existingNumber || f.invalid ">Enregistrer informations personnels
+                    </button>
+            </form>
+          </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+
