@@ -28,7 +28,7 @@ export class SignupComponent implements OnInit {
   stringDate:string ;
   numbers:string[];
   existingNumber:boolean ;
-  province:string ;
+  prov="Antananarivo" ;
   
 
   constructor(private personnesService: PersonnesService,
@@ -76,7 +76,7 @@ export class SignupComponent implements OnInit {
         this.personne.image = "defaultImg.png" ;
       }
       //Store personnes
-      this.personne.adresse=this.personne.adresse+ " " + this.province ;
+      this.personne.adresse = this.personne.adresse + " " + this.prov ;
       this.personne.nom=this.personne.nom.toUpperCase() ;
       this.personne.dateNaissance=this.personnesService.frenchDate(this.stringDate) ;
       this.personnesService.store(this.personne)
