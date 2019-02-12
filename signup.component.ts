@@ -27,8 +27,8 @@ export class SignupComponent implements OnInit {
   isIn:boolean ;
   stringDate:string ;
   numbers:string[];
-  tempNumber:string ;
-  existingNumber=false ;
+  existingNumber:boolean ;
+  province:string ;
   
 
   constructor(private personnesService: PersonnesService,
@@ -76,6 +76,7 @@ export class SignupComponent implements OnInit {
         this.personne.image = "defaultImg.png" ;
       }
       //Store personnes
+      this.personne.adresse=this.personne.adresse+ " " + this.province ;
       this.personne.nom=this.personne.nom.toUpperCase() ;
       this.personne.dateNaissance=this.personnesService.frenchDate(this.stringDate) ;
       this.personnesService.store(this.personne)
@@ -112,13 +113,13 @@ export class SignupComponent implements OnInit {
     this.personnesService.getAllNumber().subscribe(
       (res: string[]) => {
         this.numbers = res;
-        let exist=this.numbers.indexOf(this.tempNumber) ;
+        let exist=this.numbers.indexOf(this.personne.numTel) ;
         console.log(exist)
-        if(exist != -1){
-          this.existingNumber=true ;
+        if(exist === -1){
+          this.existingNumber=false ;
         }
         else{
-          this.existingNumber=false ;
+          this.existingNumber=true ;
         }
         console.log(this.existingNumber)
       },
