@@ -3,7 +3,7 @@ session_start();
 
 // db credentials
 
-define('dns', 'mysql:host=localhost;dbname=tvmrh');
+define('dns', 'mysql:host=localhost;dbname=tvmrh;charset=UTF8');
 define('user', 'root');
 define('pass', '');
 
