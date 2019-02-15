@@ -8,7 +8,7 @@ $link ;
 
 $id = ($_GET['id'] !== null && (int)$_GET['id'] > 0)? (int)$_GET['id'] : false;
 
-if (!id) {
+if (!$id) {
 	return http_response_code(400);
 }
 
