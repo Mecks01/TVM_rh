@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators' ;
 
 import {Personne} from '../models/Personne.model' ;
+import { Professionnal } from '../models/professional.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,6 @@ export class PersonnesService implements OnInit {
   getAll():Observable<Personne[]>{
     return this.http.get(`${this.baseUrl}/list`).pipe(
         map((res)=>{
-          debugger
           this.personnes=res['data'] ;
           return this.personnes ;
     }),
@@ -65,17 +65,6 @@ delete(id:number):Observable<Personne[]>{
 }
 
 
-uploadImage(formdata:any,link:string){
-  const params=new HttpParams()
-  .set('id',link.toString()) ;
-  return this.http.post(`${this.baseUrl}/uploadImg`,formdata,{params:params}) ;
-}
-
-
- reUploadImage(formdata:any,link:{'oldLink':string , 'newLink':string , 'id':string}){
-  return this.http.post(`${this.baseUrl}/reUploadImg`,formdata,{params:link}) ;
-}
-
 //Engish date to french
 frenchDate(date:string){
   date=date.toString().slice(0,15) ;
@@ -103,6 +92,7 @@ update(personne:Personne): Observable<Personne[]>{
 store(personne: Personne): Observable<Personne[]> {
   return this.http.post(`${this.baseUrl}/store`, { data: personne })
     .pipe(map((res) => {
+      localStorage.setItem('idEmp',res['data']['id']) ;
       this.personnes.push(res['data']);
       return this.personnes;
     }),
@@ -116,6 +106,35 @@ getAllNumber():Observable<string[]>{
   }),
   catchError(this.handleError)) ;
 } ;
+
+//////////////////////sendProfessionnal INfo
+sendInfo(infoProf: Professionnal){
+  console.log(infoProf) ;
+  return this.http.post(`${this.baseUrl}/storeProf`, { data: infoProf })
+  .pipe(map((res) => {
+   //this.currentId = res['data']['idEmp'] ;
+  }),
+  catchError(this.handleError));
+}
+
+////////upload avatar
+uploadImage(formdata:any,link:string){
+  const params=new HttpParams()
+  .set('id',link.toString()) ;
+  return this.http.post(`${this.baseUrl}/uploadImg`,formdata,{params:params}) ;
+}
+
+///reUpload avatar
+ reUploadImage(formdata:any,link:{'oldLink':string , 'newLink':string , 'id':string}){
+  return this.http.post(`${this.baseUrl}/reUploadImg`,formdata,{params:link}) ;
+}
+
+///////////////////////////upload CV
+uploadCV(formdata:any, pathCV:string){
+  const params=new HttpParams()
+  .set('id',pathCV.toString()) ;
+  return this.http.post(`${this.baseUrl}/uploadCV`,formdata,{params:params}) ;
+}
 
 }
 
