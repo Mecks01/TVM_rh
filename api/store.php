@@ -49,7 +49,7 @@ $sql = "INSERT INTO `personne` (`NOMPERS`,`PRENOMPERS`,`CIVILITE`,`DATENAISSANCE
       'nationalite' => $nationalite,
       'nbEnfants' => $nbEnfants,
       'id'    => mysqli_insert_id($con)
-    ];
+    ] ;
     echo json_encode(['data'=>$personne]);
   }
   else
