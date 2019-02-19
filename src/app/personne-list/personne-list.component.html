@@ -10,8 +10,8 @@
 <!---->	
     <br>
     <div class="container">
-                <div lass="col-sm-16">  
-                    <div class="col-md-3">      
+                <div class="col-sm-20">  
+                    <div class="col-md-2">      
                         <div class="portlet light profile-sidebar-portlet bordered">
                             <div class="profile-userpic">
                                 <img [src]="linkImg" class="img-responsive" alt=""> </div>
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9"> 
+                    <div class="col-md-10"> 
                         <div class="portlet light bordered">
                             <div class="table-title">
                                     <button (click)="onNewPersonne()" 
@@ -50,20 +50,22 @@
                                         <thead>
                                                 <tr style="text-decoration:underline ; color: black">
                                                     <th></th>
+                                                    <th>Matricule</th>
                                                     <th >Nom</th>
                                                     <th>Prénom</th>
-                                                    <th>Adresse</th>
-                                                    <th>Téléphone</th>
+                                                    <th>Service</th>
+                                                    <th>Fonction</th>
                                                     <th style="text-align: center">Actions</th>
                                                 </tr>
                                         </thead>
                                         <tbody>
                                                 <tr *ngFor="let personne of personnes; let i =index ">
                                                         <td><img src="assets/images/{{personne.image}}" class="img-circle" height="55px" width="60px"></td>
+                                                        <td>{{personne.matricule}}</td>
                                                         <td scope="row"><b  style="font-size: 16px"> {{personne.nom}}  </b></td>
                                                         <td>{{personne.prenom}}</td>
-                                                        <td>Chiaroscuro Portland USA</td>
-                                                        <td>{{personne.numTel}}</td>
+                                                        <td>{{personne.nomService}}</td>
+                                                        <td>{{personne.fonction}}</td>
                                                         <td>                                                      
                                                           <button class="btn btn-success btn-block" (click)="gotoProfil(i)"> Détails</button><br>
                                                           <button class="btn btn-danger " (click)="onDeletePers(i)"> Supprimer</button>
