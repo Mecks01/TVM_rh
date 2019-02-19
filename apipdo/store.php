@@ -12,7 +12,7 @@ if (isset($postdata) && !empty($postdata)) {
 	$request = json_decode($postdata);
 	
 	// Validate.
-	if (/*trim($request->data->nom) === '' ||*/ trim($request->data->numTel) === '') {
+	if (trim($request->data->nom) === '' || trim($request->data->numTel) === '') {
 		return http_response_code(400);
 	}
 
@@ -45,10 +45,10 @@ if (isset($postdata) && !empty($postdata)) {
       'numTel' => $p1->numTel,
       'email' => $p1->email,
       'image' => $p1->image,
-      'password' => $p1->password,
+      'password' => $p1->getPassword(),
       'nationalite' => $p1->nationalite,
       'nbEnfants' => $p1->nbEnfants,
-	  'id' => $sql->lastInsertId()
+	  'id' => $con->lastInsertId()
 			];
 	echo json_encode(['data'=>$personne]);
 	}

@@ -11,9 +11,13 @@ if ($result = $sql->execute(array($id))) {
 		$personne['id'] = $row['IDPERS'];
 		$personne['nom'] = $row['NOMPERS'];
 		$personne['prenom'] = $row['PRENOMPERS'];
-		$personne['numTel'] = $row['NUMPERS'];
-		$personne['image'] = $row['AVATAR'];
+		$personne['nationalite'] = $row['NATIONALITE'];
 		$personne['dateNaissance'] = $row['DATENAISSANCE'];
+		$personne['adresse'] = $row['ADRESSEPERS'];
+		$personne['numTel'] = $row['NUMPERS'];
+		$personne['civilite'] = $row['CIVILITE'];
+		$personne['nbEnfants'] = $row['NBENFANTS'];
+		$personne['image'] = $row['AVATAR'];
 	}
 
 	echo json_encode(['data'=>$personne]);
