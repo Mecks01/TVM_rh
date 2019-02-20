@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, TemplateRef } from '@angular/core';
 import { Personne } from 'src/app/models/Personne.model';
 import { PersonnesService } from 'src/app/services/personnes.service';
 import swal from 'sweetalert2';
@@ -8,7 +8,7 @@ import { frLocale } from 'ngx-bootstrap/locale';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { Professionnal } from 'src/app/models/professional.model';
 import { Diplome } from 'src/app/models/diplome.model';
-import { FormBuilder, Validators } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 defineLocale('fr',frLocale) ;
 
 @Component({
@@ -32,15 +32,20 @@ export class SignupComponent implements OnInit {
   numbers:string[];
   existingNumber:boolean ;
   prov="Antananarivo" ;
-  visible=false ;
+  visible:string ;
+  degree:string ; 
+  nomImg:"" ;
 
   ///////////Variable professionnal data
+  modalRef: BsModalRef;
+  degrees : string [] = ['BEPC','Bacc','Licence','Master','Doctorat'] ;
+  mentions : string [] = ['Excellent','Très bien','Bien','Assez bien','Passable'] ;
   existDiplome=false ;
   isSelectedCV=false ;
   listExtCV:string[] = [".doc",".pdf",".html"] ;
   extensionCV:string ;
   isInCV:boolean ;
-  profession = new Professionnal() ;
+  profession = new Professionnal('','','','','','','','') ;
   services = ['Informatique','Technique','Programmation','Production','Information'] ;
   branche = ['TVM'] ;
   fonctions = {
@@ -49,14 +54,14 @@ export class SignupComponent implements OnInit {
                 'Programmation': ['aaaaa','bbbbb','ccccc'],
                 'Production':['ttttty','eeeeee','zzzzz'],
                 'Information' :['yyyy','ggggg','nnnnnnn']
-              }
-  
+              } ;
+  diplome1: Diplome ;
 
   constructor(private personnesService: PersonnesService,
-    private formBuilder:FormBuilder,
     private router:Router,
     private elem:ElementRef ,
-    private localeService: BsLocaleService
+    private localeService: BsLocaleService,
+    private bsModalService:BsModalService
     ) { 
       this.datePickerConfig = Object.assign({}, {
         containerClass: 'theme-dark-blue',
@@ -67,11 +72,15 @@ export class SignupComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.visible=localStorage.getItem('state') ;
     this.personne.nationalite="Malagasy" ;
     this.personne.civilite="Célibataire" ;
     this.profession.nomService="Choisir service" ;
     this.profession.fonction="Choisir fonction" ;
     this.profession.grade="Employé" ;
+    this.profession.diplome=[] ;
+    this.personne.genre="Homme" ;
+    this.degree="Master" ;
   }
 
   getService(){
@@ -121,7 +130,7 @@ export class SignupComponent implements OnInit {
         this.personne.image = "defaultImg.png" ;
       }
       //Store personnes
-      this.personne.adresse = this.personne.adresse + " " + this.prov ;
+      this.personne.province = this.prov ;
       this.personne.nom=this.personne.nom.toUpperCase() ;
       this.personne.dateNaissance=this.personnesService.frenchDate(this.stringDate) ;
       this.personnesService.store(this.personne)
@@ -132,7 +141,9 @@ export class SignupComponent implements OnInit {
         },
         (err)=>this.error=err 
       ) ;
-      this.visible=false; 
+      this.stringDate="" ;
+      this.visible='false'; 
+      localStorage.setItem('state',this.visible) ;
     }
     })
    ;
@@ -143,6 +154,7 @@ export class SignupComponent implements OnInit {
     let files=this.elem.nativeElement.querySelector('#avatar').files ;
       let file=files[0] ;
       this.file=file.name ;
+      this.nomImg=file.name ;
       this.extension= ((file.name).substring((file.name).lastIndexOf('.'))).toLowerCase() ;
       if(this.listExt.indexOf(this.extension) >= 0){
           this.isIn=true ;
@@ -186,13 +198,36 @@ export class SignupComponent implements OnInit {
     )
   }
 
-  onAddDiplome(i){
-    this.formBuilder.control('',Validators.required) ;
-    console.log('salamapoilu') ;
+  onAddDiplome(template: TemplateRef<any>){
+    this.diplome1=new Diplome('Master','','Assez bien','') ;
+    this.modalRef = this.bsModalService.show(template,{ class: 'container' });
+  }
+  addThisDiplome(){
+    this.profession.diplome.push(this.diplome1) ;
+    this.modalRef.hide() ;
   }
 
   addInfo(){
-    console.log('salama') ;
+    this.profession.idEmp = +localStorage.getItem('idEmp') ;
+    this.profession.pathCV = this.profession.matricule + "_CV" + this.extensionCV ;
+
+                    //upload CV ;
+    if(this.isSelectedCV == true){
+      let files=this.elem.nativeElement.querySelector('#CV').files ;
+      let formData= new FormData() ;
+      let file=files[0] ; 
+      formData.append('CV',file,file.name) ;
+      this.profession.pathCV =this.profession.matricule +"_CV" + this.extensionCV ;
+      this.personnesService.uploadCV(formData,this.profession.pathCV).subscribe() ;
+      }
+      else{
+        this.profession.pathCV = "Pas de CV" ;
+      }
+      //Store profession
+    this.profession.dateEmbauche = this.personnesService.frenchDate(this.stringDate) ;
+    this.personnesService.sendInfo(this.profession).subscribe() ;
+    localStorage.removeItem('state') ;
+    localStorage.removeItem('idEmp') ;
   }
 }
   

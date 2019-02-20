@@ -46,6 +46,7 @@ export class SinglePersonneComponent implements OnInit {
       }) ;
       this.localeService.use('fr') ;
      }
+  
 
   ngOnInit() { 
     this.personne = new Personne() ;  
@@ -61,7 +62,6 @@ export class SinglePersonneComponent implements OnInit {
       }
     ); 
     this.stringDate=this.personne.dateNaissance ;
-    
   }
 //////////////////////////////suppression personne
   onDeletePersonne(){
@@ -82,8 +82,8 @@ export class SinglePersonneComponent implements OnInit {
                          this.personnesService.personnes =res ;
                         },
                         (err) => this.error=err) ;
-                          this.router.navigate(['/Personnes']) ;   
-                          window.location.reload() ; 
+                          //this.router.navigate(['/Personnes']) ;   
+                         // window.location.reload() ; 
             }
         })
         ;
@@ -134,9 +134,10 @@ export class SinglePersonneComponent implements OnInit {
             //Mis a jour liste pers
             this.personnesService.personnes=res ;
             //reset the form
-            window.location.reload() ;
+            //window.location.reload() ;
           },
           (err)=>this.error=err 
         ) ;
+        this.modalRef.hide() ;
       }
 }

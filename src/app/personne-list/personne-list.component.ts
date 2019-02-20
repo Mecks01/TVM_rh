@@ -31,7 +31,7 @@ export class PersonneListComponent implements OnInit {
       this.persService.getSinglePersonne(this.idUser).subscribe(
         (res: Personne) => {
           this.currentUser = res;
-          this.linkImg="assets/images/" + this.currentUser.image ;
+          this.linkImg="assets/images/" +/* this.currentUser.image*/ "defaultImg.png";
         },
         (err) => {
           this.error = err;
@@ -79,7 +79,7 @@ export class PersonneListComponent implements OnInit {
                        this.persService.personnes =res ;
                       },
                       (err) => this.error=err) ;
-                        window.location.reload() ;    
+                        //window.location.reload() ;    
           }
       })
       ;
