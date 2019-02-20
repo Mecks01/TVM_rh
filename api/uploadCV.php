@@ -1,7 +1,7 @@
 <?php
 require 'connect.php';
 
-$pathCV = ($_GET['id'] !== "")? mysqli_real_escape_string($con, $_GET['id']) : false;
+$pathCV = ($_GET['id'] !== "")? $_GET['id'] : false;
 if(isset($_FILES['CV']) AND !empty($_FILES['CV']['name'])) {
   $tailleMax = 2097152;
   if($_FILES['CV']['size'] <= $tailleMax) {

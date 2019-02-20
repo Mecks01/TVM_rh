@@ -1,9 +1,8 @@
 <?php
-require 'connect.php';
-$oldLink = ($_GET['oldLink'] !== "")? mysqli_real_escape_string($con,$_GET['oldLink']) : false;
-$newLink = ($_GET['newLink'] !== "")? mysqli_real_escape_string($con,$_GET['newLink']) : false;
-$id = ((int)$_GET['id'] !== null) ? mysqli_real_escape_string($con,(int)$_GET['id']) : false;
-
+require 'connect.php' ;
+$oldLink = ($_GET['oldLink'] !== "")? $_GET['oldLink'] : false;
+$newLink = ($_GET['newLink'] !== "")? $_GET['newLink'] : false;
+$id = ((int)$_GET['id'] !== null) ? (int)$_GET['id'] : false;
       if($oldLink !== "defaultImg.png"){
         unlink("C:/Users/asus/Desktop/TVM/Personnes/src/assets/images/".$oldLink) ;
       }
@@ -18,14 +17,12 @@ $id = ((int)$_GET['id'] !== null) ? mysqli_real_escape_string($con,(int)$_GET['i
                           $msg = "Votre photo de profil ne doit pas dépasser 2Mo";
                       }
                       // Update.
-            $sql = "UPDATE `employer` SET `avatar`='$newLink' WHERE `id` = '{$id}' LIMIT 1";
-
-            if(mysqli_query($con, $sql))
-            {
-              http_response_code(204);
-            }
-            else
-            {
-              return http_response_code(422);
-            }  
+            $sql = $con->prepare("UPDATE personne SET AVATAR = ? WHERE IDPERS = ? LIMIT 1");
+		if ($sql->execute(array($newLink,$id))) {
+			http_response_code(204);
+		}
+		else
+		{
+			return http_response_code(422);	
+		}
           }

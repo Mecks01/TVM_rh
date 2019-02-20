@@ -3,7 +3,7 @@ require 'connect.php';
 $personnes = [];
 $sql = $con->prepare("SELECT IDPERS,NOMPERS,PRENOMPERS,AVATAR,MATRICULE,NOMSERV,FONCTION 
         FROM (personne AS pers INNER JOIN infoprof AS prof ON pers.IDPERS = prof.IDPROF) 
-        INNER JOIN service AS serv ON serv.IDSERVICE=prof.IDPROF");
+        INNER JOIN service AS serv ON serv.IDSERVICE=prof.IDSERVICE");
 if ($result = $sql->execute()){
 	$pers = 0;
 	while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {

@@ -16,6 +16,8 @@ if ($result = $sql->execute(array($id))) {
     $personne['image'] = $row['AVATAR'];
     $personne['nationalite'] = $row['NATIONALITE'];
     $personne['nbEnfants'] = $row['NBENFANTS'];
+    $personne['province'] = $row['PROVINCE'];
+    $personne['genre'] = $row['GENRE'];
 	}
 	echo json_encode(['data'=>$personne]);
 }

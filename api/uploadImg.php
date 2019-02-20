@@ -1,7 +1,6 @@
-<?php
+<?php 
 require 'connect.php';
-
-$lien = ($_GET['id'] !== "")? mysqli_real_escape_string($con, $_GET['id']) : false;
+$lien = ($_GET['id'] !== "")? $_GET['id'] : false;
 if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
   $tailleMax = 2097152;
   if($_FILES['avatar']['size'] <= $tailleMax) {
