@@ -1,11 +1,8 @@
 <?php 
-
 // db credentials
-
 define('dns', 'mysql:host=localhost;dbname=tvmrh;charset=UTF8');
 define('user', 'root');
 define('pass', '');
-
 function connect()
 {
 	try {

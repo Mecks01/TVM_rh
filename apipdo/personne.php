@@ -1,7 +1,5 @@
 <?php 
-
-namespace apipdo;
-
+namespace api;
 /**
  * 
  */
@@ -19,14 +17,14 @@ class Personne
 	public $civilite;
 	public $nbEnfants;
 	public $image;
-
+	public $province ;
+	public $genre ;
 	public function getNom() {
 		return $this->_nom;
 	}
 	public function setNom($nom) {
 		$this->_nom = trim(strtoupper($nom));
 	}
-
 	public function getPrenom() {
 		return $this->_prenom;
 	}
@@ -40,10 +38,8 @@ class Personne
 	public function setPassword($password) {
 		$this->_password = sha1($password);
 	}
-
 	private function formatNom($str) {
 		$str=mb_strtolower($str);
-
 		$strTmp = $this->formatMot("'",$this->formatMot(' ',$this->formatMot('-',$this->formatMot(',',$this->formatMot(':',$str)))));
 		if($strTmp===$str)
 		{
@@ -54,7 +50,6 @@ class Personne
 		}
 		else return $strTmp;
 	}
-
 	private function formatMot($delim,$str) {
 		$strComplet =null;
 		$delimForm="/".$delim."/";
@@ -73,23 +68,16 @@ class Personne
 		}
 		else return $str;
 	}
-
 	private function remplace_accents($item, $charset = 'utf-8')
 	{
 		$item = htmlentities($item, ENT_NOQUOTES, $charset);
-
 		$item = preg_replace('#\&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring)\;#', '\1', $item);
 		$item = preg_replace('#\&([A-za-z]{2})(?:lig)\;#', '\1', $item);
 		$item = preg_replace('#\&[^;]+\;#', '', $item);
-
 		return $item;
-
 	}
-
 	function __construct()
 	{
-
 	}
 }
-
  ?>

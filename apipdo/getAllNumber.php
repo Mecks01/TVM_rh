@@ -11,12 +11,10 @@ if($sql->execute()){
 		$numbers[$pers] = $row['NUMPERS'];
 		$pers++;
 	}
-
 	echo json_encode(['data'=>$numbers]);
 }
 else
 {
 	http_response_code(422);
 }
-
  ?>
