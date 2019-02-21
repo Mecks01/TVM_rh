@@ -1,0 +1,506 @@
+<div id="user-profile-2" class="user-profile">
+		<div class="tabbable">
+
+			<div class="tab-content no-border padding-24">
+				<div id="home" class="tab-pane in active">
+					<div class="row">
+						<div class="col-xs-12 col-sm-3 center">
+							<span class="profile-picture">
+								<img class="editable img-responsive" alt=" Avatar" id="avatar2" [src]="linkImg ">
+							</span>
+
+								<i class="ace-icon fa fa-plus-circle bigger-110"></i>
+								<span class="btn-file ace-icon fa fa-plus-circle bigger-110 btn btn-sm btn-block btn-success" style="font-size:17px">
+									Changer Profil <input type="file" id="reavatar" name="reavatar" (change)="check()" accept="Image/*">
+								</span>
+									<div class="alert alert-danger" *ngIf="isIn==false">
+										<strong>Veuillez choisir un format de fichier Image correct (jpg,png,gif,jpeg)</strong>
+									</div>
+								
+								<button *ngIf="isSelected==true && isIn==true" class="btn btn-primary btn-block pull-right" (click)="onChangeProfil()" >	
+										Appuyez pour appliquer  
+								</button>
+						</div><!-- /.col -->
+
+						<div class="col-xs-12 col-sm-9">
+							<h4>
+									<button class="btn btn-danger pull-right" (click)="onDeletePersonne()">	
+											Supprimer ce compte  
+									</button>
+								<b><span class="middle" style="font-size:25px">{{personne.nom}}</span></b>
+								<span class="label label-purple arrowed-in-right">
+									<i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+								</span>
+							</h4>
+
+							<!--details Personne-->
+									<div  class="list-group list-block">
+										<button class="list-group-item myHeader" >
+											<h4  style="color:ivory">
+												<b>
+													Détails Employé.
+												</b>
+												<button class="btn btn-default pull-right" (click)="isClicked=!isClicked">
+													<span class="glyphicon glyphicon-triangle-bottom"></span>
+												</button>
+											</h4>
+										</button>
+									</div>
+
+						<div  *ngIf="isClicked== true">
+							<div class="profile-user-info">
+									<div class="profile-info-row">
+											<button class="btn btn-info pull-right" (click)="onUpdate(template)">Modifier
+													<span class="glyphicon glyphicon-cog"></span>
+											</button>
+									</div>
+								<div class="profile-info-row">
+									<div class="profile-info-name"> Prénom:  </div>
+									<div class="profile-info-value">
+										<span>{{personne.prenom}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> Genre : </div>
+
+									<div class="profile-info-value">
+										<i class="fa fa-map-marker light-orange bigger-110"></i>
+										<span>{{personne.genre}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> Adresse : </div>
+
+									<div class="profile-info-value">
+										<i class="fa fa-map-marker light-orange bigger-110"></i>
+										<span>{{personne.adresse}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> Province : </div>
+
+									<div class="profile-info-value">
+										<i class="fa fa-map-marker light-orange bigger-110"></i>
+										<span>{{personne.province}}</span>
+									</div>
+								</div>
+
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> Née le : </div>
+
+									<div class="profile-info-value">
+										<span>{{personne.dateNaissance}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"> Civilité :</div>
+
+									<div class="profile-info-value">
+										<span>{{personne.civilite}}</span>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+										<div class="profile-info-name"> Nationalité : </div>
+	
+										<div class="profile-info-value">
+											<span>{{personne.nationalite}}</span>
+										</div>
+								</div>
+
+								<div class="profile-info-row">
+										<div class="profile-info-name"> Adresse mail :</div>
+	
+										<div class="profile-info-value">
+											<span>{{personne.email}}</span>
+										</div>
+								</div>
+
+								<div class="profile-info-row">
+										<div class="profile-info-name"> Contact :</div>
+	
+										<div class="profile-info-value">
+											<span>{{personne.numTel}}</span>
+										</div>
+								</div>
+
+								<div class="profile-info-row">
+										<div class="profile-info-name">Nbr d'enfants: </div>
+	
+										<div class="profile-info-value">
+											<span>{{personne.nbEnfants}}</span>
+										</div>
+								</div>	
+
+							</div>
+
+							<div class="hr hr-8 dotted"></div>				
+						</div>
+
+
+
+						<!--details Personne-->
+						<!--Autre details-->
+						<div  class="list-group list-block">
+							<button class="list-group-item myHeader" >
+								<h4  style="color:ivory">
+									<b>
+										Détails Employé.
+									</b>
+									<button class="btn btn-default pull-right" (click)="isClicked1=!isClicked1">
+										<span class="glyphicon glyphicon-triangle-bottom"></span>
+									</button>
+								</h4>
+							</button>
+						</div>
+
+			<div  *ngIf="isClicked1== true">
+				<div class="profile-user-info">
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Prénom:  </div>
+
+						<div class="profile-info-value">
+							<span>{{personne.prenom}}</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Adresse : </div>
+
+						<div class="profile-info-value">
+							<i class="fa fa-map-marker light-orange bigger-110"></i>
+							<span>Netherlands</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Age :</div>
+
+						<div class="profile-info-value">
+							<span>38</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Joined </div>
+
+						<div class="profile-info-value">
+							<span>2010/06/20</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Last Online </div>
+
+						<div class="profile-info-value">
+							<span>3 hours ago</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="hr hr-8 dotted"></div>
+
+				<div class="profile-user-info">
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Website </div>
+
+						<div class="profile-info-value">
+							<a href="#" target="_blank">www.alexdoe.com</a>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name">
+							<i class="middle ace-icon fa fa-facebook-square bigger-150 blue"></i>
+						</div>
+
+						<div class="profile-info-value">
+							<a href="#">Find me on Facebook</a>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name">
+							<i class="middle ace-icon fa fa-twitter-square bigger-150 light-blue"></i>
+						</div>
+
+						<div class="profile-info-value">
+							<a href="#">Follow me on Twitter</a>
+						</div>
+					</div>
+				</div>
+			</div>
+						<!--Autre details-->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+
+					<div class="space-20"></div>
+
+					<!--<div class="row">
+						<div class="col-xs-12 col-sm-6">
+							<div class="widget-box transparent">
+								<div class="widget-header widget-header-small">
+									<h4 class="widget-title smaller">
+										<i class="ace-icon fa fa-check-square-o bigger-110"></i>
+										Little About Me
+									</h4>
+								</div>
+
+								<div class="widget-body">
+									<div class="widget-main">
+										<p>
+											My job is mostly lorem ipsuming and dolor sit ameting as long as consectetur adipiscing elit.
+										</p>
+										<p>
+											Sometimes quisque commodo massa gets in the way and sed ipsum porttitor facilisis.
+										</p>
+										<p>
+											The best thing about my job is that vestibulum id ligula porta felis euismod and nullam quis risus eget urna mollis ornare.
+										</p>
+										<p>
+											Thanks for visiting my profile.
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>--><!-- /#home -->
+
+					<div class="space-12"></div>
+
+				</div><!-- /#pictures -->
+		</div>
+	</div>
+
+<!-- Modification details single Personne -->
+	<ng-template #template >			
+		<div class="modal-body">	
+			<div id="theForm">
+				<h3><u>Modification détails personnels</u></h3>
+				<form #f="ngForm" name="theForm" (submit)="updatePersDetails(f)" >
+				
+		<div class="row">
+				<div class="form-group col-sm-4">
+					<label>Nom:</label>
+					<input type="text"
+						class="form-control"
+						name="nom"
+						[(ngModel)]="personne.nom"
+						#nomPers="ngModel"
+						required
+						pattern="^[a-zA-Z]+$" placeholder="Anarana" 
+						autocomplete="off">
+					<span style="color:green" class="help-block danger" *ngIf="nomPers.errors?.required && nomPers.touched">
+					Le nom est obligatoire !!
+					</span>
+				</div>
+			
+				<div class="form-group col-sm-5">
+					<label>Prénom:</label>
+					<input type="text"
+							class="form-control"
+							name="prenom"
+							[(ngModel)]="personne.prenom"
+							#prenomPers="ngModel"
+							required
+							placeholder="Fanampnah Anarana" 
+							autocomplete="off">
+					<span style="color:green" class="help-block danger" *ngIf="prenomPers.errors?.required && prenomPers.touched">
+						Le Prénom est obligatoire !!
+					</span>
+				</div>
+		</div>
+
+
+		<div class="row">
+			<div class="form-group col-sm-4">
+				<label>Genre:</label>
+				<select class="form-control"
+								name="genre"
+								[(ngModel)]="personne.genre"
+								#genre="ngModel"
+								required>
+								<option value="Homme">Homme</option>
+								<option value="Femme">Femme</option>
+								<option value="Jeune Femme">Jeune Femme</option>
+				</select>
+		  </div>
+		</div>
+
+			<div class="row">
+				<div class="form-group col-sm-4">
+						<label>Adresse:</label>
+						<input type="text"
+							  class="form-control"
+							  name="adresse"
+							  [(ngModel)]="personne.adresse"
+							  #adresse="ngModel"
+							  required
+							  placeholder="Adresse" 
+							  autocomplete="off">
+						<span style="color:green" class="help-block danger" *ngIf="adresse.errors?.required && adresse.touched">
+						  <b> Adresse </b>obligatoire !!
+						</span>
+				</div>
+
+				<div class="form-group col-sm-5">
+                        <label for="province">Province</label>
+                        <select class="form-control"                                                                          
+                                name="province"
+                                [(ngModel)]="personne.province"
+                                #province="ngModel"
+                                required>
+                                <option value="Antananarivo">Antananarivo</option>
+                                <option value="Antsiranana">Antsiranana</option>
+                                <option value="Antsirabe">Antsirabe</option>
+                                <option value="Fianarantsoa">Fianarantsoa</option>
+                                <option value="Mahajanga">Mahajanga</option>
+                                <option value="Toamasina">Toamasina</option>
+                                <option value="Toliara">Toliara</option>
+                                
+                        </select>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="form-group col-sm-4">
+						<label>Numéro Téléphone:</label>
+						<input type="text"
+							class="form-control"
+							name="numTel"
+							[(ngModel)]="personne.numTel"
+							#numTel="ngModel"
+							required
+							pattern="[0-9]{10}"
+							autocomplete="off"
+							placeholder="Numéro téléphone">
+						<span class="help-block danger" *ngIf="numTel.errors?.required && numTel.touched" style="color:green">
+						Votre numéro est obligatoire !!
+						</span>
+						<span style="color:red" class="help-block danger" *ngIf="numTel.errors?.pattern && numTel.touched">
+							Le numéro doit seulement contenir des Chiffres (0-9) et minimum 10 chiifres !
+						</span>
+				</div>	
+
+				<div class="form-group col-sm-5">
+                        <label>Adresse E-Mail:</label>
+                        <input type="text"
+                              class="form-control"
+                              name="email"
+                              [(ngModel)]="personne.email"
+                              #email="ngModel"
+                              required
+                              pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z.]{2,15}"
+                              autocomplete="off"
+                              placeholder="Adresse email">
+                        <span style="color:red" class="help-block danger" *ngIf="email.errors?.pattern && email.touched">
+                            Adresse <b> E-Mail</b> invvalide!
+                        </span>
+				</div>
+			</div>
+
+
+			<!--	<div class="form-group col-sm-3">
+                        <label>Mot de Passe:</label>
+                        <input type="password"
+                              class="form-control"
+                              name="passwordPers"
+                              [(ngModel)]="personne.password"
+                              #passwordPers="ngModel"
+                              required
+                              autocomplete="off"
+                              placeholder="Mot de Passe" 
+                              required>
+                          <span class="help-block danger" *ngIf="passwordPers.errors?.required && passwordPers.touched" style="color:green">
+                                  <b>Password</b> obligatoire!
+                          </span>
+				</div>
+				-->
+			
+			
+			<div class="row">  
+					<div class="form-group col-sm-4">
+							<label>Nationalité :</label>
+							<select class="form-control"
+									name="nationalite"
+									[(ngModel)]="personne.nationalite"
+									#nationalite="ngModel"
+									required >
+									<option value="Malagasy" selected><b>Malagasy</b></option>
+									<option value="Nationalité étrangère"><b>Autre nationalité</b></option>
+							</select>
+						</div>
+						<div class="form-group col-sm-5">
+							<label>Etat civil :</label>
+							<select class="form-control"
+									name="civilite"
+									[(ngModel)]="personne.civilite"
+									#civilite="ngModel"
+									required>
+									<option value="Marié">Marié</option>
+									<option value="Divorcé">Divorcé</option>
+									<option value="Célibataire">Célibataire</option>
+							</select>
+						</div>
+			</div>
+
+		<div class="row">
+						<div class="form-group col-sm-4">
+							<label>Nombre d'enfants :</label>
+							<input type="number"
+								  min="0" 
+								  class="form-control"
+								  name="nbEnfants"
+								  [(ngModel)]="personne.nbEnfants"
+								  #nbEnfants="ngModel"
+								  required
+								  placeholder="Nombre d'enfants" 
+								  autocomplete="off">
+						</div>
+						<div class="form-group col-sm-5">
+								<label for="dateNaissance">Date de naissance</label>
+								<input type="text" 
+									class="form-control" 
+									bsDatepicker 
+									[bsConfig]="datePickerConfig" 
+									id="dateNaiss"  
+									[(ngModel)]="stringDate"
+									#dateNaiss="ngModel"
+									name="dateNaiss"
+									required
+									autocomplete="off"
+									placeholder="Date de naissance"
+									(change)="isChanged==true">
+						</div>
+			</div>
+			
+				<div>
+						<div class="modal-footer">
+							<button
+								class="btn btn-primary pull-right"
+								[disabled]="f.invalid && isIn!=true">Appliquer les modifications
+							</button>
+							<button 
+									type="button" 
+									class="btn btn-default pull-left" 
+									(click)="modalRef.hide()">Annuler
+							</button>
+						</div>
+							
+				</div>
+				</form>
+			</div>
+</div>		
+	</ng-template>
+
+
+
+
+	
