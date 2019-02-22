@@ -11,10 +11,10 @@ export class AdminGuardService implements CanActivate{
  
               canActivate(): Observable<boolean> | Promise<boolean> | boolean {
                   if (localStorage.getItem('currentUserGrade') !== 'Employé') {
-                    // logged in so return true
+                    // logged as admin so return true
                     return true;
                 }     
-                // not logged in so redirect to login page with the return url
+                // not logged as admin so redirect to the profile
                   this.router.navigate(['personne/view/'+localStorage.getItem('currentUser')]);
                 return false;
               }
