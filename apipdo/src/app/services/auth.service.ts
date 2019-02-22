@@ -21,6 +21,7 @@ export class AuthService {
                         // login successful if there's a jwt token in the response
                         if (user.status==200) {
                             // store user details and jwt token in local storage to keep user logged in between page refreshes
+                            debugger
                             localStorage.setItem('currentUser', user.data['IDPERS']);
                             localStorage.setItem('currentUserGrade', user.data['GRADE']);
                             localStorage.setItem('currentUserServ', user.data['NOMSERV']);                   
@@ -31,6 +32,7 @@ export class AuthService {
               logout(){
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('currentUserGrade');
+                localStorage.removeItem('currentUserServ');
                 this.route.navigate(['auth/signin']) ;
                 window.location.reload() ;
               }

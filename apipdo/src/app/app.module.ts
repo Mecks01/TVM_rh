@@ -13,6 +13,7 @@ import { SinglePersonneComponent } from './personne-list/single-personne/single-
 import { HeaderComponent } from './header/header.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { AdminGuardService } from './services/admin-guard.service';
 import { PersonnesService } from './services/personnes.service';
 import {Routes, RouterModule} from '@angular/router' ;
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2' ;
@@ -25,7 +26,7 @@ const appRoutes: Routes=[
   {path:'',canActivate:[IsAuthGuardService],component:SigninComponent},
   {path:'auth/signup',component:SignupComponent},
   {path:'auth/signin',canActivate:[IsAuthGuardService],component:SigninComponent},
-  {path :'Personnes', canActivate:[AuthGuardService],component:PersonneListComponent},
+  {path :'Personnes', canActivate:[AuthGuardService,AdminGuardService],component:PersonneListComponent},
   {path:'Personne/view/:id',canActivate:[AuthGuardService],component:SinglePersonneComponent},
   {path:'**',canActivate:[IsAuthGuardService],redirectTo :'/auth/signin'}
 ]
@@ -56,6 +57,7 @@ const appRoutes: Routes=[
     AuthService,
     AuthGuardService,
     PersonnesService,
+    AdminGuardService,
     IsAuthGuardService
   ],
   bootstrap: [AppComponent]
