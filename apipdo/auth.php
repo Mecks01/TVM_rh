@@ -23,7 +23,7 @@
  		}
  	}
 
- 	if (!empty($personne)) {
+ 	if (!empty($personne) and isset($personne['IDPERS'])) {
  			echo json_encode(array('status'=>'200','data'=>$personne));
  	}
  	else{
