@@ -9,6 +9,6 @@ if(isset($_FILES['CV']) AND !empty($_FILES['CV']['name'])) {
        $resultat = move_uploaded_file($_FILES['CV']['tmp_name'], $chemin);  
       } 
    else {
-     $msg = "Votre photo de profil ne doit pas dépasser 2Mo";
+     $msg = "Votre CV ne doit pas dépasser 2Mo";
   }
 }

@@ -14,6 +14,7 @@
 		$grade = $request->data->grade;
 		$pathCV = $request->data->pathCV;
 		$diplomes = $request->data->diplome ;
+		
 		$sql0 = $con->prepare("SELECT IDSERVICE FROM service WHERE FONCTION = ? AND NOMSERV = ? AND GRADE = ?");
 		if($sql0->execute(array($fonction,$nomService,$grade))) 
 		{
