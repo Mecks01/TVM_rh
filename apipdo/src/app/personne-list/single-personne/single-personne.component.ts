@@ -122,7 +122,7 @@ export class SinglePersonneComponent implements OnInit {
     }
 
       updatePersDetails(f){
-        this.personne.nom=this.personne.nom.toUpperCase() ;
+        // this.personne.nom=this.personne.nom.toUpperCase() ;
         if(this.personne.dateNaissance == this.stringDate.toString()){
           this.personne.dateNaissance=this.stringDate.toString() ;
         }
@@ -134,7 +134,7 @@ export class SinglePersonneComponent implements OnInit {
             //Mis a jour liste pers
             this.personnesService.personnes=res ;
             //reset the form
-            //window.location.reload() ;
+            window.location.reload() ;
           },
           (err)=>this.error=err 
         ) ;
