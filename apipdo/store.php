@@ -1,5 +1,5 @@
 <?php 
-namespace api;
+namespace apipdo;
 require 'connect.php';
 require_once 'personne.php';
 // Get the posted data.
