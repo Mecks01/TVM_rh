@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators' ;
 
 import {Personne} from '../models/Personne.model' ;
+import { Professionnal } from '../models/professional.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,11 @@ export class PersonnesService implements OnInit {
     
   }
   
-  getAll():Observable<Personne[]>{
-    return this.http.get(`${this.baseUrl}/list`).pipe(
+  getAll(service:string):Observable<Personne[]>{
+    const params=new HttpParams()
+    .set('service',service);
+    return this.http.get(`${this.baseUrl}/list`,{params:params}).pipe(
         map((res)=>{
-          debugger
           this.personnes=res['data'] ;
           return this.personnes ;
     }),
@@ -33,7 +35,7 @@ export class PersonnesService implements OnInit {
     console.log(error) ;
     return throwError('Erreur sur qlq chose.') ; 
   }
-
+////////////get single personne personnel
 getSinglePersonne(id:number) : Observable<Personne>{
   const params=new HttpParams()
   .set('id',id.toString()) ;
@@ -50,6 +52,8 @@ getSinglePersonne(id:number) : Observable<Personne>{
 
 
 
+
+////////delete personne data
 delete(id:number):Observable<Personne[]>{
   const params=new HttpParams()
   .set('id',id.toString()) ;
@@ -65,23 +69,12 @@ delete(id:number):Observable<Personne[]>{
 }
 
 
-uploadImage(formdata:any,link:string){
-  const params=new HttpParams()
-  .set('id',link.toString()) ;
-  return this.http.post(`${this.baseUrl}/uploadImg`,formdata,{params:params}) ;
-}
-
-
- reUploadImage(formdata:any,link:{'oldLink':string , 'newLink':string , 'id':string}){
-  return this.http.post(`${this.baseUrl}/reUploadImg`,formdata,{params:link}) ;
-}
-
 //Engish date to french
 frenchDate(date:string){
   date=date.toString().slice(0,15) ;
   let months= {'Jan':'01','Feb':'02','Mar':'03',
-              'Apr':'04','Mai':'05','Jun':'06',
-              'Jul':'07','Aug':'08','Sept':'09',
+              'Apr':'04','May':'05','Jun':'06',
+              'Jul':'07','Aug':'08','Sep':'09',
               'Oct':'10','Nov':'11','Dec':'12'} ;
   let days  =  {'Mon':'Lundi','Tue':'Mardi','Wed':'Mercredi',
               'Thu':'Jeudi','Fri':'Vendredi','Sat':'Samedi',
@@ -103,11 +96,30 @@ update(personne:Personne): Observable<Personne[]>{
 store(personne: Personne): Observable<Personne[]> {
   return this.http.post(`${this.baseUrl}/store`, { data: personne })
     .pipe(map((res) => {
+      localStorage.setItem('idEmp',res['data']['id']) ;
       this.personnes.push(res['data']);
       return this.personnes;
     }),
     catchError(this.handleError));
 }
+
+
+
+
+////////upload avatar
+uploadImage(formdata:any,link:string){
+  const params=new HttpParams()
+  .set('id',link.toString()) ;
+  return this.http.post(`${this.baseUrl}/uploadImg`,formdata,{params:params}) ;
+}
+
+///reUpload avatar
+ reUploadImage(formdata:any,link:{'oldLink':string , 'newLink':string , 'id':string}){
+  return this.http.post(`${this.baseUrl}/reUploadImg`,formdata,{params:link}) ;
+}
+
+
+
 ///////////////liste des numTel
 getAllNumber():Observable<string[]>{
   return this.http.get(`${this.baseUrl}/getAllNumber`).pipe(
@@ -116,6 +128,8 @@ getAllNumber():Observable<string[]>{
   }),
   catchError(this.handleError)) ;
 } ;
+
+
 
 }
 

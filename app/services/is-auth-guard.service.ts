@@ -20,7 +20,7 @@ export class IsAuthGuardService implements CanActivate {
                 }     
                 // not logged in so redirect to login page with the return url
                 else{
-                  this.router.navigate(['/Personnes']);
+                  this.router.navigate(['/Personne/view/'+localStorage.getItem('currentUser')]);
                 return false;
                 }
               }

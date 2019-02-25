@@ -18,14 +18,19 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2' ;
 import { NgxWebstorageModule } from 'ngx-webstorage' ;
 import { IsAuthGuardService } from './services/is-auth-guard.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TabsModule } from 'ngx-bootstrap';
+import { NgxPaginationModule} from 'ngx-pagination';
+import { ProfessionService } from './services/profession.service';
+import { AdminGuardService } from './admin-guard.service';
 
 const appRoutes: Routes=[
   
   {path:'',canActivate:[IsAuthGuardService],component:SigninComponent},
   {path:'auth/signup',component:SignupComponent},
   {path:'auth/signin',canActivate:[IsAuthGuardService],component:SigninComponent},
-  {path :'Personnes', canActivate:[AuthGuardService],component:PersonneListComponent},
+  {path :'Personnes', canActivate:[AuthGuardService,AdminGuardService],component:PersonneListComponent},
   {path:'Personne/view/:id',canActivate:[AuthGuardService],component:SinglePersonneComponent},
+  {path:'assets/fichiers/:id',component:SinglePersonneComponent},
   {path:'**',canActivate:[IsAuthGuardService],redirectTo :'/auth/signin'}
 ]
 
@@ -48,13 +53,17 @@ const appRoutes: Routes=[
     SweetAlert2Module.forRoot() ,
     NgxWebstorageModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TabsModule.forRoot(),
+    NgxPaginationModule
   ],
   providers: [
     AuthService,
     AuthGuardService,
     PersonnesService,
-    IsAuthGuardService
+    IsAuthGuardService,
+    ProfessionService,
+    AdminGuardService
   ],
   bootstrap: [AppComponent]
 })

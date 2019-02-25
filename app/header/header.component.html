@@ -1,19 +1,27 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-expand-lg navbar-inverse fixed-top" id="mainNav">
   <div class="container-fluid">
     <ul class="nav navbar-nav"> 
-        <li routerLinkActive="active">
-          <a routerLink="auth/signin" *ngIf="isAuth==false">S'identifier</a>
+        <li>
+          <a class="navbar-brand js-scroll-trigger" routerLink="auth/signin" *ngIf="isAuth==false">
+            <span class="glyphicon glyphicon-log-in"></span>
+            S'identifier</a>
         </li>  
-        <li routerLinkActive="active">
-            <a routerLink="auth/signup" *ngIf="isAuth==false">Nouvel Employé </a>
+        <li >
+            <a class="navbar-brand js-scroll-trigger" routerLink="auth/signup" *ngIf="isAuth==false">
+              <span class="glyphicon glyphicon-plus"></span>
+              Nouvel Employé </a>
           </li>  
-      <li routerLinkActive="active">
-        <a routerLink="Personnes" *ngIf="isAuth==true">Liste Employés</a>
+      <li >
+        <a class="navbar-brand js-scroll-trigger" routerLink="Personnes" *ngIf="isAuth==true">
+            <span class="glyphicon glyphicon-list-alt"></span>
+          Liste Employés</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li>
-        <a (click)="onSignOut()" *ngIf="isAuth==true" style="cursor: pointer;">Déconnexion</a>
+        <a (click)="onSignOut()" *ngIf="isAuth==true" style="cursor: pointer;">
+            <span class="glyphicon glyphicon-log-out"></span>
+          Déconnexion</a>
       </li>
     </ul>
   </div>  

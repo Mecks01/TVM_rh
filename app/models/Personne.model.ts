@@ -1,3 +1,5 @@
+import { Professionnal } from './professional.model';
+
 export class Personne{
    
      id:number
@@ -5,12 +7,15 @@ export class Personne{
      prenom:string
      nationalite:string
      dateNaissance:string 
-     adresse:string
+     adresse:string ;
+     province:string ;
      numTel:string
      email:string ;
      password:string ;
      civilite:string ;
      nbEnfants:number ;
-     image:string
+     image:string ;
+     genre:string ;
+     professionnel: Professionnal ;
     constructor( ){}
 }

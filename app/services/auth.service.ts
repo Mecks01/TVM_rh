@@ -16,18 +16,23 @@ export class AuthService {
 
             
               login(username: string, password: string) {
-                return this.http.post<any>('http://localhost/api/auth.php', JSON.stringify({ username: username, password: password }))
+                return this.http.post<any>(`${this.baseUrl}/auth`, JSON.stringify({ username: username, password: password }))
                     .pipe(map(user => {
                         // login successful if there's a jwt token in the response
                         if (user.status==200) {
                             // store user details and jwt token in local storage to keep user logged in between page refreshes
-                            localStorage.setItem('currentUser', user.data['id']);
+                            localStorage.setItem('currentUser', user.data['IDPERS']);
+                            localStorage.setItem('currentUserGrade', user.data['GRADE']);
+                            localStorage.setItem('currentUserServ', user.data['NOMSERV']);    
+                                           
                         }
                         return user;
                     }));
             }
               logout(){
                 localStorage.removeItem('currentUser');
+                localStorage.removeItem('currentUserGrade');
+                localStorage.removeItem('currentUserServ');
                 this.route.navigate(['auth/signin']) ;
                 window.location.reload() ;
               }
