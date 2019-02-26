@@ -9,7 +9,7 @@ import { Personne } from '../models/Personne.model';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl='http://localhost/apipdo' ;
+  baseUrl='http://localhost/api' ;
 
   constructor(private http:HttpClient,
               private route:Router) { }
@@ -21,10 +21,10 @@ export class AuthService {
                         // login successful if there's a jwt token in the response
                         if (user.status==200) {
                             // store user details and jwt token in local storage to keep user logged in between page refreshes
-                            debugger
                             localStorage.setItem('currentUser', user.data['IDPERS']);
                             localStorage.setItem('currentUserGrade', user.data['GRADE']);
-                            localStorage.setItem('currentUserServ', user.data['NOMSERV']);                   
+                            localStorage.setItem('currentUserServ', user.data['NOMSERV']);    
+                                           
                         }
                         return user;
                     }));
