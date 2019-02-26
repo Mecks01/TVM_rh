@@ -69,6 +69,7 @@ export class SignupComponent implements OnInit {
     this.profession.grade="Employé" ;
     this.profession.diplome=[] ;
     this.personne.genre="Homme" ;
+    this.personne.nbEnfants=0;
     this.degree="Master" ;
     this.profService.onVerifDirecteur('Directeur','TVM') ;
     this.profService.fullChef() ;
