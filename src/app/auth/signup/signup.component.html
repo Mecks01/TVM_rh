@@ -6,9 +6,17 @@
             <div class="panel-heading">  <h3><u>Informations personnels</u></h3></div>
             <div class="panel-body">
             <form #f="ngForm" name="theForm" (submit)="addPers(f)"  enctype="multipart/form-data" method="POST">
-              <div class="form-group col-sm-8 btn-block" *ngIf="isIn==false">
-                  <div class="alert alert-danger btn-block"  >
-                      <strong>Veuillez choisir un format de fichier Image correct (jpg,png,gif,jpeg)</strong>
+             
+              <div class="row">
+                  <div class="form-group col-sm-6 btn-block" *ngIf="isIn==false">
+                      <div class="alert alert-danger btn-block"  >
+                          <strong>Veuillez choisir un format de fichier Image correct (jpg,png,gif,jpeg)</strong>
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-6 btn-block" *ngIf="isSelected && isIn==true">
+                      <div class="alert alert-success btn-block"  >
+                          <strong>Image " {{nomImg}} " insérée.</strong>
+                      </div>
                   </div>
               </div>
               <div class="row">
@@ -19,10 +27,6 @@
                         <input type="file" id="avatar" name="avatar" (change)="check()" accept="Image/*">
                       </span>
                   </div>
-
-                  <div class="form-group form-group col-sm-6 pull-right"  >
-                            <strong>Image " {{nomImg}} " insérée.</strong> 
-                  </div> 
               </div>   
               
                     <div class="row">
@@ -62,8 +66,10 @@
                                 #genre="ngModel"
                                 required>
                                 <option value="Homme">Homme</option>
+                                <option value="Jeune homme">Jeune homme</option>
                                 <option value="Femme">Femme</option>
-                                <option value="Jeune Femme">Jeune Femme</option>
+                                <option value="Jeune Femme">Jeune femme</option>
+                                
                         </select>
                     </div>
                   </div>
@@ -114,7 +120,8 @@
                                       name="dateNaiss"
                                       required
                                       autocomplete="off"
-                                      placeholder="Date de naissance">
+                                      placeholder="Date de naissance"
+                                      placement="top">
                       </div>
                   </div>
 
@@ -123,7 +130,7 @@
                   </div> 
 
                 <div class="row">
-                    <div class="form-group col-sm-4">
+                    <div class="form-group col-sm-6">
                         <label>Numéro Téléphone:</label>
                         <input type="text"
                               class="form-control"
@@ -136,7 +143,7 @@
                               placeholder="Numéro téléphone"
                               (change)="onChangeNumber()">
                         <span class="help-block danger" *ngIf="numTel.errors?.required && numTel.touched" style="color:green">
-                          <b> Numéro </b> obligatoire !!
+                          <b> Numéro </b> obligatoire !
                         </span>
                         <span style="color:red" class="help-block danger" *ngIf="numTel.errors?.pattern && numTel.touched">
                             Le numéro doit seulement contenir des Chiffres (0-9) et minimum 10 chiifres !
@@ -145,7 +152,7 @@
                           Ce numéro existe déjà (Vous êtes déjà inscrit) !
                         </span>
                       </div>
-                    <div class="form-group col-sm-4">
+                    <div class="form-group col-sm-6">
                         <label>Adresse E-Mail:</label>
                         <input type="text"
                               class="form-control"
@@ -159,9 +166,12 @@
                         <span style="color:red" class="help-block danger" *ngIf="email.errors?.pattern && email.touched">
                             Adresse <b> E-Mail</b> invvalide!
                         </span>
-                      </div>
-                    <div class="form-group col-sm-4">
-                        <label>Mot de Passe:</label>
+                      </div> 
+                </div> 
+
+                <div class="row">
+                  <div class="form-group col-sm-6">
+                      <label>Mot de Passe:</label>
                         <input type="password"
                               class="form-control"
                               name="passwordPers"
@@ -174,8 +184,29 @@
                           <span class="help-block danger" *ngIf="passwordPers.errors?.required && passwordPers.touched" style="color:green">
                                   <b>Password</b> obligatoire!
                           </span>
-                    </div>   
-                </div> 
+                  </div>
+
+                  <div class="form-group col-sm-6">
+                      <label>Confirmation mot de Passe:</label>
+                      <input type="password"
+                            class="form-control"
+                            name="Cpassword"
+                            [(ngModel)]="Cpass"
+                            #Cpassword="ngModel"
+                            required
+                            autocomplete="off"
+                            placeholder="Confirmez votre mot de Passe" 
+                            compare="passwordPers"                                                            
+                            required>
+                        <span class="help-block danger" *ngIf="Cpassword.errors?.required && Cpassword.touched" style="color:green">
+                               Confirmation <b>Password</b> obligatoire!
+                        </span>
+                        <span class="help-block danger" *ngIf="Cpassword.errors?.compare && Cpassword.touched" style="color:green">
+                          Les <b>mots de passe</b>  ne correspondent pas!
+                        </span>
+                        
+                  </div>   
+              </div>
                     
                 <div class="row">
                     <div class="form-group col-sm-4">
@@ -203,7 +234,8 @@
                     </div>
                     <div class="form-group col-sm-4">
                         <label>Nombre d'enfants :</label>
-                        <input type="text"
+                        <input type="number"
+                              min="0"
                               class="form-control"
                               name="nbEnfants"
                               [(ngModel)]="personne.nbEnfants"
@@ -213,7 +245,7 @@
                               autocomplete="off">
                     </div>
                 </div>
-
+                <a routerLink="/auth/signin" style="font-size: 18px ;color:black"><b>S'identifier</b></a>
                         <button
                             class="btn btn-info btn-sm pull-right"
                             [disabled]="existingNumber || f.invalid || isIn==false">Enregistrer informations personnels
@@ -228,7 +260,7 @@
 
 <ng-template #professionnal>
     <div class="container-fluid col-md-9 col-sm-offset-2">   
-      <div id="theForm" class="panel panel-danger">
+      <div id="theForm" class="panel panel-info">
         <div class="panel-heading">  <h3 ><u>Informations professionnels</u></h3></div>
         <div class="panel-body">
         <form #f2="ngForm" name="theForm" (submit)="addInfo()"  enctype="multipart/form-data" method="POST">
@@ -237,14 +269,14 @@
               <div class="alert alert-success btn-block" >
                   <b>Veuillez maintenant remplir vos informations professionnels ci-dessous</b>
               </div>
-              <div class="alert alert-info btn-block"  *ngIf="isInCV==true">
+              <div class="alert alert-info btn-block"  *ngIf="profService.isInCV==true">
                 <strong>Votre CV est bien insérée :) </strong>
               </div>
-              <div class="alert alert-warning btn-block"  *ngIf="isInCV==false">
+              <div class="alert alert-danger btn-block"  *ngIf="profService.isInCV==false">
                   <strong>Veuillez choisir un format de fichier texte correct (.doc - .pdf - .html)</strong>
               </div> 
-                <div class="form-group col-sm-6">
-                  <span class="btn-file ace-icon fa fa-plus-circle bigger-110 btn btn-sm btn-info " style="font-size:17px">
+                <div class="form-group col-sm-6 pull-right">
+                  <span class="btn-file ace-icon fa fa-plus-circle bigger-110 btn btn-sm btn-info pull-right" style="font-size:17px">
                       <b class="glyphicon glyphicon-folder-open"></b>
                       <b>  Insérez votre CV ici</b> 
                       <input type="file" id="CV" name="CV" (change)="checkCV()" accept=".pdf,.doc,.html">
@@ -318,10 +350,12 @@
                               name="grade"
                               [(ngModel)]="profession.grade"
                               #grade="ngModel"
-                              required>
-                              <option value="Directeur">Directeur</option>
-                              <option value="Chef">Chef</option>
+                              required 
+                              (change)="this.profService.verifChef(profession.grade)">
+                              <option [disabled]="this.profService.existDirecteur" value="Directeur">Directeur</option>
+                              <option [disabled]="this.profService.isFullChef" value="Chef">Chef</option>
                               <option value="Employé">Employé</option>
+                              <option value="Stagiaire">Stagiaire</option>
                       </select>                  
                   </div>
 
@@ -331,9 +365,10 @@
                             name="service"
                             [(ngModel)]="profession.nomService"
                             #service="ngModel"
+                            (change) ="profService.service(profession.nomService)"
                             required>
                             <option disabled selected style="color: grey">Choisir service</option>
-                            <option *ngFor="let grade of getGrade()" value="{{grade}}">{{grade}}</option>
+                            <option *ngFor="let grade of profService.getGrade(profession.grade) ; let i=index"  [disabled]="profService.selectedChefExists[i]==true" value="{{grade}}">{{grade}}</option>
                     </select>
                     <span class="help-block danger" *ngIf="service.errors?.required && service.touched" style="color:green">
                       Choisissez un <b> service</b> !
@@ -346,8 +381,8 @@
                             [(ngModel)]="profession.fonction"
                             #fonction="ngModel"
                             required>
-                            <option disabled selected style="color: grey">Choisir fonction:</option>
-                            <option *ngFor="let fonct of getService()" value="{{fonct}}">{{fonct}}</option>
+                            <option disabled selected style="color: grey" value="Choisir fonction">Choisir fonction</option>
+                            <option *ngFor="let fonct of this.profService.getService(profession.grade)" value="{{fonct}}">{{fonct}}</option>
                     </select>
                     <span class="help-block danger" *ngIf="service.errors?.required && service.touched" style="color:green">
                       Choisissez un <b> service</b> !
@@ -369,42 +404,34 @@
                                 name="dateembauche"
                                 required
                                 autocomplete="off"
-                                placeholder="Date d'embauche">
+                                placeholder="Date d'embauche"
+                                placement="top">
                      </div>
                      <div class="form-group col-sm-6">
                         <label for="diplome">Cliquez pour ajouter un diplome :</label>
-                        <input type="button" class="btn btn-default form-control" (click)="onAddDiplome(diplome)" value="Ajouter diplome"/>
+                        <input type="button" style="background-color:slategrey;color: cornsilk" class="btn btn-default form-control" (click)="onAddDiplome(diplome)" value="Ajouter diplome"/>
                      </div>
               </div>
 
               <div class="row" *ngIf="profession.diplome.length > 0">
-                  <div class="form-group col-sm-3">
-                      <b><u>Degrée: </u></b>    
-                  </div>
-                  <div class="form-group col-sm-3">
-                      <b><u>Filière: </u></b>
-                  </div>
-                  <div class="form-group col-sm-3">
-                       <b><u>Mention: </u></b>
-                  </div>
-                  <div class="form-group col-sm-3">
-                       <b><u>Nom institution: </u></b>
-                  </div>
-              </div>
-
-              <div class="row" *ngFor="let dipl of profession.diplome">
-                <div class="form-group col-sm-3">
-                    {{dipl.degree}}
-                </div>
-                <div class="form-group col-sm-3">
-                    {{dipl.filiere}}
-                </div>
-                <div class="form-group col-sm-3">
-                    {{dipl.mention}}
-                </div>
-                <div class="form-group col-sm-3">
-                    {{dipl.nomInstitution}}
-                </div>
+                <table class="table table-striped table-bordered">
+                  <thead style="background-color:teal;color: cornsilk">
+                    <tr>
+                      <td><b><u>Degrée: </u></b></td>
+                      <td><b><u>Filière: </u></b></td>
+                      <td><b><u>Mention: </u></b></td>
+                      <td><b><u>Nom institution: </u></b></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let dipl of profession.diplome">
+                      <td>{{dipl.degree}}</td>
+                      <td>{{dipl.filiere}}</td>
+                      <td> {{dipl.mention}}</td>
+                      <td>{{dipl.nomInstitution}}</td>
+                    </tr>
+                  </tbody>
+                </table>  
               </div>
 <!--POPUP pour diplomes-->
                 <ng-template #diplome>
@@ -420,7 +447,7 @@
                                       [(ngModel)]="diplome1.degree"
                                       #deg="ngModel"
                                       required>
-                                      <option *ngFor="let deg of degrees" value="{{deg}}">{{deg}}</option>
+                                      <option *ngFor="let deg of this.profService.degrees" value="{{deg}}">{{deg}}</option>
                                 </select> 
                           </div>
                           <div class="form-group col-sm-3">
@@ -446,7 +473,7 @@
                                         [(ngModel)]="diplome1.mention"
                                         #mention="ngModel"
                                         required>
-                                        <option *ngFor="let men of mentions" value="{{men}}">{{men}}</option>
+                                        <option *ngFor="let men of this.profService.mentions" value="{{men}}">{{men}}</option>
                                   </select> 
                             </div>
 
@@ -481,7 +508,7 @@
                   </ng-template>
                     <button
                         class="btn btn-success btn-sm pull-right"
-                        [disabled]="f2.invalid ">Envoyer informations professionnels
+                        [disabled]="f2.invalid || profession.nomService=='Choisir service' || profession.fonction == 'Choisir fonction'">Envoyer informations professionnels
                     </button>
             </form>
           </div>

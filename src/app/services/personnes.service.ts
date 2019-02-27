@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators' ;
 
 import {Personne} from '../models/Personne.model' ;
 import { Professionnal } from '../models/professional.model';
+import { getAllDebugNodes } from '@angular/core/src/debug/debug_node';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,15 @@ export class PersonnesService implements OnInit {
   constructor(private http:HttpClient) { }
 
   ngOnInit(){
-    
+    this.getAll('TVM').subscribe((res)=>{
+      this.personnes=res['data'] ;
+    }) ;
   }
   
-  getAll():Observable<Personne[]>{
-    return this.http.get(`${this.baseUrl}/list`).pipe(
+  getAll(service:string):Observable<Personne[]>{
+    const params=new HttpParams()
+    .set('service',service);
+    return this.http.get(`${this.baseUrl}/list`,{params:params}).pipe(
         map((res)=>{
           this.personnes=res['data'] ;
           return this.personnes ;
@@ -33,7 +38,7 @@ export class PersonnesService implements OnInit {
     console.log(error) ;
     return throwError('Erreur sur qlq chose.') ; 
   }
-
+////////////get single personne personnel
 getSinglePersonne(id:number) : Observable<Personne>{
   const params=new HttpParams()
   .set('id',id.toString()) ;
@@ -50,12 +55,16 @@ getSinglePersonne(id:number) : Observable<Personne>{
 
 
 
+
+////////delete personne data
 delete(id:number):Observable<Personne[]>{
   const params=new HttpParams()
   .set('id',id.toString()) ;
+  debugger
   return this.http.delete(`${this.baseUrl}/delete`,{params:params})
   .pipe(
     map(() =>{
+      
     const persfiltred=this.personnes.filter((personne) =>{
       return +personne['id'] !== +id ;
     }) ;
@@ -98,24 +107,9 @@ store(personne: Personne): Observable<Personne[]> {
     }),
     catchError(this.handleError));
 }
-///////////////liste des numTel
-getAllNumber():Observable<string[]>{
-  return this.http.get(`${this.baseUrl}/getAllNumber`).pipe(
-      map((res)=>{
-        return res['data'] ;
-  }),
-  catchError(this.handleError)) ;
-} ;
 
-//////////////////////sendProfessionnal INfo
-sendInfo(infoProf: Professionnal){
-  console.log(infoProf) ;
-  return this.http.post(`${this.baseUrl}/storeProf`, { data: infoProf })
-  .pipe(map((res) => {
-   //this.currentId = res['data']['idEmp'] ;
-  }),
-  catchError(this.handleError));
-}
+
+
 
 ////////upload avatar
 uploadImage(formdata:any,link:string){
@@ -129,12 +123,18 @@ uploadImage(formdata:any,link:string){
   return this.http.post(`${this.baseUrl}/reUploadImg`,formdata,{params:link}) ;
 }
 
-///////////////////////////upload CV
-uploadCV(formdata:any, pathCV:string){
-  const params=new HttpParams()
-  .set('id',pathCV.toString()) ;
-  return this.http.post(`${this.baseUrl}/uploadCV`,formdata,{params:params}) ;
-}
+
+
+///////////////liste des numTel
+getAllNumber():Observable<string[]>{
+  return this.http.get(`${this.baseUrl}/getAllNumber`).pipe(
+      map((res)=>{
+        return res['data'] ;
+  }),
+  catchError(this.handleError)) ;
+} ;
+
+
 
 }
 

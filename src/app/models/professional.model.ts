@@ -2,6 +2,7 @@ import { Diplome } from './diplome.model';
 
 export class Professionnal{
     idEmp:number ;
+    conges : {'idProf':number,'dateDebut':string,'nbJours':string,'dateRetour':string,'motif':string} [];
     
         constructor(public  matricule:string ,
                     public  emailProf:string ,

@@ -13,6 +13,7 @@ export class SigninComponent implements OnInit {
   isAuth=true ;
   loading = false;
   model: any = {};
+  Id: number;
 
   constructor(private Auth:AuthService ,
      private router:Router) { }
@@ -28,8 +29,14 @@ export class SigninComponent implements OnInit {
 
             if(data.status==200)
              {
-              this.router.navigate(['/Personnes']); 
-              window.location.reload() ;
+               if (localStorage.getItem('currentUserGrade') == 'Employé') {
+                 this.router.navigate(['/Personne/view/'+localStorage.getItem('currentUser')]);
+                 window.location.reload();
+               }
+               else{
+                this.router.navigate(['/Personnes']); 
+                window.location.reload() ;
+              }
              }
              else
              {
