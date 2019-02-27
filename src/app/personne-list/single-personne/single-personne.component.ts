@@ -43,6 +43,8 @@ export class SinglePersonneComponent implements OnInit {
   stringDateEmb:string ;
   contentArray : Diplome [];
   p: number=1 ;
+  n:number=0 ;
+  p2:number=0 ;
   DateDebut:any ;
   DateRetour:any ;
   conge : {'idProf':number,'dateDebut':string,'nbJours':string,'dateRetour':string,'motif':string} ;

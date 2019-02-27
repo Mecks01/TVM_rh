@@ -281,7 +281,7 @@
 																	</thead>
 
 																	<tbody>
-																		<tr *ngFor="let diplome of contentArray | paginate: {itemsPerPage : 3 ,currentPage: p } ">
+																		<tr *ngFor="let diplome of contentArray ">
 																			<td>	{{diplome.degree}}</td>
 																			<td>	{{diplome.filiere}}</td>
 																			<td>{{diplome.mention}}</td>
@@ -289,9 +289,6 @@
 																		</tr>
 																	</tbody>
 																</table>
-																<div>
-																	<pagination-controls class="pull-right" (pageChange)="p = $event" autoHide="true" previousLabel="Précédent" nextLabel="Suivant"></pagination-controls>
-																</div>
 																<br>
 															</div>
 															<br>
@@ -330,7 +327,7 @@
 																				autocomplete="off"
 																				placeholder="Nombre de jour">
 																			<span class="help-block danger" *ngIf="nbJour.errors?.required && nbJour.touched" style="color:green">
-																			Nombre de jour obligatoire !!
+																					Nombre de jour obligatoire !!
 																			</span>
 																        </div>
  
@@ -386,8 +383,8 @@
 																			</thead>
 		
 																			<tbody>
-																				<tr *ngFor="let conge of conges | paginate: {itemsPerPage : 3 ,currentPage: p } ,index as i">
-																					<td>	{{i+1}}</td>
+																				<tr *ngFor="let conge of conges | paginate: {itemsPerPage : 3 ,currentPage: p2 } ,index as i">
+																					<td>	{{n+1}}</td>
 																					<td>	{{conge.dateDebut}}</td>
 																					<td>{{conge.nbJours}}</td>
 																					<td>{{conge.dateRetour}}</td>
@@ -396,10 +393,10 @@
 																			</tbody>
 																		</table>
 																		<div>
-																			<pagination-controls class="pull-right" (pageChange)="p = $event" autoHide="true" previousLabel="Précédent" nextLabel="Suivant"></pagination-controls>
+																			<pagination-controls class="pull-right" (pageChange)="p2 = $event" autoHide="true" previousLabel="Précédent" nextLabel="Suivant"></pagination-controls>
 																		</div>
 																		<br>
-																	</div>
+																</div>
 
 															</tab>
 
@@ -515,10 +512,10 @@
 										name="passwordPers"
 										[(ngModel)]="personne.password"
 										#passwordPers="ngModel"
-										required
+									
 										autocomplete="off"
 										placeholder="Nouveau de Passe" 
-										required>
+										>
 								<span class="help-block danger" *ngIf="passwordPers.errors?.required && passwordPers.touched" style="color:green">
 												<b>Password</b> obligatoire!
 								</span>
@@ -533,11 +530,11 @@
 											name="Cpassword"
 											[(ngModel)]="Cpass"
 											#Cpassword="ngModel"
-											required
+											
 											autocomplete="off"
 											placeholder="Confirmez votre mot de Passe" 
 											compare="passwordPers"                                                            
-											required>
+											>
 									<span class="help-block danger" *ngIf="Cpassword.errors?.required && Cpassword.touched" style="color:green">
 												 Confirmation <b>Password</b> obligatoire!
 									</span>

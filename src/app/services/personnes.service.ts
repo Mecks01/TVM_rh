@@ -60,7 +60,6 @@ getSinglePersonne(id:number) : Observable<Personne>{
 delete(id:number):Observable<Personne[]>{
   const params=new HttpParams()
   .set('id',id.toString()) ;
-  debugger
   return this.http.delete(`${this.baseUrl}/delete`,{params:params})
   .pipe(
     map(() =>{
