@@ -9,12 +9,9 @@ if (!$id) {
 }
 // Delete Image.
 $sqlImg = $con->prepare("SELECT AVATAR,NOMPERS FROM personne WHERE IDPERS = ? LIMIT 1") ;
-if ($result = $sqlImg->execute(array( $id))) {
-	$pers = 0;
-	while ($row = $sqlImg->fetch(PDO::FETCH_ASSOC)) {
+if ($result = $sqlImg->execute(array($id))) {
+        $row = $sqlImg->fetch(PDO::FETCH_ASSOC) ;
 		$link = $row['AVATAR'];
-		$pers++;
-	}
 	if(trim($link) != "defaultImg.png")
 	{
 		unlink("C:/Users/asus/Desktop/TVM/Personnes/src/assets/images/$link") ;
@@ -32,6 +29,15 @@ else
 	return http_response_code(422);	
 }
 
+
+$sql0 = $con->prepare( " DELETE FROM conge WHERE IDPROF = ? ");
+if ($sql0->execute(array($id))) {
+	http_response_code(204);
+}
+else
+{
+	return http_response_code(422);	
+}
 ///delete from infoprof first
 $sql1 = $con->prepare( "DELETE FROM infoprof WHERE IDPROF = ? ");
 if ($sql1->execute(array($id))) {

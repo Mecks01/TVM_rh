@@ -5,7 +5,7 @@ $personnes = [];
 if ($service === 'TVM') {
 	$sql = $con->prepare("SELECT IDPERS,NOMPERS,PRENOMPERS,AVATAR,MATRICULE,NOMSERV,FONCTION 
    		     FROM (personne AS pers INNER JOIN infoprof AS prof ON pers.IDPERS = prof.IDPROF) 
-        	INNER JOIN service AS serv ON serv.IDSERVICE=prof.IDSERVICE");
+        	INNER JOIN service AS serv ON serv.IDSERVICE=prof.IDSERVICE ORDER BY NOMSERV");
 		if ($result = $sql->execute()){
 			$pers = 0;
 		while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
@@ -27,7 +27,7 @@ if ($service === 'TVM') {
 else {
 	$sql = $con->prepare("SELECT IDPERS,NOMPERS,PRENOMPERS,AVATAR,MATRICULE,NOMSERV,FONCTION 
    		     FROM (personne AS pers INNER JOIN infoprof AS prof ON pers.IDPERS = prof.IDPROF) 
-        	INNER JOIN service AS serv ON serv.IDSERVICE=prof.IDSERVICE WHERE NOMSERV = ?");
+        	INNER JOIN service AS serv ON serv.IDSERVICE=prof.IDSERVICE WHERE NOMSERV = ? ORDER BY NOMSERV");
 		if ($result = $sql->execute(array($service))){
 			$pers = 0;
 		while ($row = $sql->fetch(PDO::FETCH_ASSOC)) {

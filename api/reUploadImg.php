@@ -5,9 +5,8 @@ $newLink = ($_GET['newLink'] !== "")? $_GET['newLink'] : false;
 $id = ((int)$_GET['id'] !== null) ? (int)$_GET['id'] : false;
       if($oldLink !== "defaultImg.png"){
         unlink("C:/Users/asus/Desktop/TVM/Personnes/src/assets/images/".$oldLink) ;
-      }
             if(isset($_FILES['reavatar']) AND !empty($_FILES['reavatar']['name'])) {
-              $tailleMax = 2097152;
+              $tailleMax = 12097152;
                   if($_FILES['reavatar']['size'] <= $tailleMax) {
                         $chemin = "C:/Users/asus/Desktop/TVM/Personnes/src/assets/images/".$newLink ;
                         $resultat = move_uploaded_file($_FILES['reavatar']['tmp_name'], $chemin) ; 
@@ -26,3 +25,4 @@ $id = ((int)$_GET['id'] !== null) ? (int)$_GET['id'] : false;
 			return http_response_code(422);	
 		}
           }
+}

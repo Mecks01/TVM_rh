@@ -6,12 +6,10 @@ $id = ((int)$_GET['id'] !== null) ? (int)$_GET['id'] : false;
       if($oldLink !== "Pas de CV"){
         unlink("C:/Users/asus/Desktop/TVM/Personnes/src/assets/fichiers/".$oldLink) ;
       }
-            if(isset($_FILES['CV']) AND !empty($_FILES['CV']['name'])) {
-              $tailleMax = 20971520;
-                  if($_FILES['CV']['size'] <= $tailleMax) {
+            if(isset($_FILES['CV']) AND !empty($_FILES['CV']['name'])) {               
                         $chemin = "C:/Users/asus/Desktop/TVM/Personnes/src/assets/fichiers/".$newLink ;
                         $resultat = move_uploaded_file($_FILES['CV']['tmp_name'], $chemin) ; 
-                        }
+            }
                       else
                       {
                           $msg = "Votre CV ne doit pas dépasser 2Mo";
