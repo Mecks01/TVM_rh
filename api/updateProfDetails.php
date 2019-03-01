@@ -17,7 +17,14 @@ if (isset($postdata) && !empty($postdata)) {
     $grade = trim($request->data->grade);
      
 	$matricule = trim($request->data->matricule); 
-	$emailProf = trim($request->data->emailProf); 
+	
+	if(isset($request->data->emailProf)){
+		$emailProf = trim($request->data->emailProf);
+	}
+	else{
+		$emailProf = "Pas d'email";
+	}
+
     $numProf = trim($request->data->numProf); 
     $dateEmbauche = trim($request->data->dateEmbauche);
 

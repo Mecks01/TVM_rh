@@ -6,7 +6,14 @@
 		$request = json_decode($postdata);
 		$id = $request->data->idEmp;
 		$matricule = $request->data->matricule;
-		$emailProf = $request->data->emailProf;
+
+		if(isset($request->data->emailProf)){
+			$emailProf = trim($request->data->emailProf);
+		}
+		else{
+			$emailProf = "Pas d'email";
+		}
+
 		$numProf = $request->data->numProf;
 		$dateEmbauche = $request->data->dateEmbauche;
 		$nomService = $request->data->nomService;

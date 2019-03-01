@@ -19,11 +19,18 @@ if (isset($postdata) && !empty($postdata)) {
 	$p1->dateNaissance = trim($request->data->dateNaissance);
 	$p1->adresse = trim($request->data->adresse);
 	$p1->numTel = trim($request->data->numTel);
-	$p1->email = trim($request->data->email);
+
+	if(isset($request->data->email)){
+		$p1->email = trim($request->data->email);
+	}
+	else{
+		$p1->email = "Pas d'email";
+	} ;
+	
 	$p1->image = trim($request->data->image);
 	$p1->setPassword($request->data->password) ;
-  $p1->nationalite = trim($request->data->nationalite);
-  $p1->province = trim($request->data->province);
+  	$p1->nationalite = trim($request->data->nationalite);
+  	$p1->province = trim($request->data->province);
 	$p1->nbEnfants = (int)($request->data->nbEnfants);
 	$p1->genre = ($request->data->genre);
 	// store
