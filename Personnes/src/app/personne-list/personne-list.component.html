@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+</head>
+<div *ngIf="error">{{error}}</div>
+<div *ngIf="success">{{success}}</div>
+
+<body style="background-color: rgb(232, 232, 248)">	
+<!---->	
+            <!--our content goes here-->
+            <div class="container-fluid content">
+                    <div class="row profile">
+                        <div class="col-md-3" style="background-color: sandybrown ;border-radius: 8px">
+                            <div class="profile-sidebar position-fixed" style="background-color: rgb(241, 237, 199) ">
+                            <!-- SIDEBAR USERPIC -->
+                            <div class="profile-userpic">
+                                <img [src]="linkImg" class="avatar" alt="">
+                            </div>
+                            <!-- END SIDEBAR USERPIC -->
+                            <!-- SIDEBAR USER TITLE -->
+                            <div class="profile-usertitle">
+                                <div class="profile-usertitle-name" style="color:rgb(8, 10, 42) ;font-size: 20px">
+                                        {{currentUser.nom}} 
+                                </div>
+                                <div class="profile-usertitle-name" style="font-size: 18px">
+                                        {{currentUser.prenom}}
+                                </div>
+                                
+                                <div class="profile-usertitle-job" style="font-size: 15px">
+                                        {{cUprofessionnel.fonction}}  
+                                </div>
+                                <div class="profile-usertitle-job" style="font-size: 15px">
+                                      {{cUprofessionnel.nomService}}
+                                </div>
+                            </div>
+                            <!-- END SIDEBAR USER TITLE -->
+                            <!-- SIDEBAR BUTTONS -->
+                            <div class="profile-userbuttons">
+                                    <button class="btn btn-warning btn-sm" (click)="gotoProfilUser()"> Détails</button>
+                            </div>
+                            <!-- END SIDEBAR BUTTONS -->
+                            <!-- SIDEBAR MENU -->
+                            <div class="profile-usermenu sidebar-sticky">
+                                
+                            </div>
+                            <!-- END MENU -->
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                                <div class="profile-content">
+
+
+                                        <div class="portlet light bordered">
+                                                <div class="table-title">
+                                                    <div class="row">
+                                                        <div class="form-group col-sm-5">
+                                                            <div class="caption-subject font-blue-madison bold uppercase">
+                                                                <h3><u>Liste des <b>Employés</b></u>({{getNombre()}})</h3>
+                                                            </div>
+                                                        </div>	
+                                                        
+                                                        <div class="form-group col-sm-5 pull-right">
+                                                            <br>
+                                                                <button (click)="onNewPersonne()" 
+                                                                class="btn btn-info" >
+                                                                <i class="glyphicon glyphicon-plus"></i> 
+                                                                    <b><span style="color:ivory ; font-size: 16px">Nouvelle employé</span></b>
+                                                            </button>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <table class="table table-striped table-wrapper-scroll-y" cellspacing="0" width="100%">
+                                                            <thead>
+                                                                    <tr style="text-decoration:underline ; color: black">
+                                                                        <th></th>
+                                                                        <th>Matricule</th>
+                                                                        <th >Nom-Prénom</th>
+                                                                        <th>Fonction</th>
+                                                                        <th>Service</th>
+                                                                        <th style="text-align: center">Actions</th>
+                                                                    </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                    <tr *ngFor="let personne of personnes| paginate: {itemsPerPage : 4 ,currentPage: p }; index as i ">
+                                                                            <td><img src="assets/images/{{personne.image}}" class="avatar" height="55px" width="60px"></td>
+                                                                            <td>{{personne.matricule}}</td>
+                                                                            <td scope="row"><b  style="font-size: 13px ;color: black"> {{personne.nom}}</b> 
+                                                                                {{personne.prenom}}</td>
+                                                                            <td style="color: rgb(8, 10, 42)">{{personne.fonction}}</td>
+                                                                            <td>{{personne.nomService}}</td>
+                                                                            <td>                                                      
+                                                                            <button class="btn btn-success btn-block" (click)="gotoProfil(personne.id)"> Détails</button>
+                                                                            <button class="btn btn-danger btn-block btn-sm" (click)="onDeletePers(personne.id,personne.nom)">Supprimer</button>
+                                                                            </td>
+                                                                    </tr>
+                                                            </tbody>
+                                                    </table>
+                                                    <div class="clearfix">
+                                                            <div class="hint-text" style="font-size:19px ; color:darkred ">Liste arreté sur <span class="label label-info"><b>{{getNombre()}}</b></span> Employés.</div>
+                                                            <pagination-controls class="pull-right" (pageChange)="p = $event"  previousLabel="Précédent" nextLabel="Suivant"></pagination-controls>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                        </div>
+            </div>
+</body>
+</html>                                		                            
