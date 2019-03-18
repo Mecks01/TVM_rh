@@ -14,4 +14,5 @@ function connect()
 	}
 	return $connect;
 }
+$root = $_SERVER['DOCUMENT_ROOT']."/Personnes/assets/" ;
 $con = connect();

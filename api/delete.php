@@ -14,7 +14,7 @@ if ($result = $sqlImg->execute(array($id))) {
 		$link = $row['AVATAR'];
 	if(trim($link) != "defaultImg.png")
 	{
-		unlink("C:/Users/asus/Desktop/TVM/Personnes/src/assets/images/$link") ;
+		unlink($root."/Personnes/assets/images/$link") ;
 	}
 }
 

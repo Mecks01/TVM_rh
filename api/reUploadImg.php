@@ -4,13 +4,13 @@ $oldLink = ($_GET['oldLink'] !== "")? $_GET['oldLink'] : false;
 $newLink = ($_GET['newLink'] !== "")? $_GET['newLink'] : false;
 $id = ((int)$_GET['id'] !== null) ? (int)$_GET['id'] : false;
       if($oldLink !== "defaultImg.png"){
-        unlink("C:/xampp/htdocs/Personnes/assets/images/".$oldLink) ;
+        unlink($root."images/".$oldLink) ;
       }
 
             if(isset($_FILES['reavatar']) AND !empty($_FILES['reavatar']['name'])) {
               $tailleMax = 12097152;
                   if($_FILES['reavatar']['size'] <= $tailleMax) {
-                        $chemin = "C:/xampp/htdocs/Personnes/assets/images/".$newLink ;
+                        $chemin = $root."images/".$newLink ;
                         $resultat = move_uploaded_file($_FILES['reavatar']['tmp_name'], $chemin) ; 
                         }
                       else
@@ -19,11 +19,11 @@ $id = ((int)$_GET['id'] !== null) ? (int)$_GET['id'] : false;
                       }
                       // Update.
             $sql = $con->prepare("UPDATE personne SET AVATAR = ? WHERE IDPERS = ? LIMIT 1");
-		if ($sql->execute(array($newLink,$id))) {
-			http_response_code(204);
-		}
-		else
-		{
-			return http_response_code(422);	
-		}
+    if ($sql->execute(array($newLink,$id))) {
+      http_response_code(204);
+    }
+    else
+    {
+      return http_response_code(422); 
+    }
           }
