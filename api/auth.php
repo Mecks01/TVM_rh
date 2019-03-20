@@ -5,11 +5,11 @@
  if(isset($user['username']) && isset($user['password']))
  {
  	$num = $user['username'] ;
- 	$pass = sha1($user['password']);
- 	$sql = $con->prepare("SELECT IDPERS FROM personne WHERE NUMPERS =? AND PASSWORD = ? ");
- 	if($sql->execute(array($num, $pass))){
+ 	$pass = $user['password'] ;
+ 	$sql = $con->prepare("SELECT IDPERS, PASSWORD FROM personne WHERE NUMPERS =? ");
+ 	if($sql->execute(array($num))){
  		$personne = $sql->fetch(PDO::FETCH_ASSOC);
- 		
+
  		$sql1 = $con->prepare("SELECT IDSERVICE FROM infoprof WHERE IDPROF = ?");
  		if($sql1->execute(array($personne['IDPERS']))){
  			$res = $sql1->fetch(PDO::FETCH_ASSOC);
@@ -22,7 +22,7 @@
  			}
  		}
  	}
- 	if (!empty($personne) and isset($personne['IDPERS'])) {
+ 	if (!empty($personne) and isset($personne['IDPERS']) and password_verify($pass, $personne['PASSWORD'])) {
  			echo json_encode(array('status'=>'200','data'=>$personne));
  	}
  	else{

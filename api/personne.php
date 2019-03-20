@@ -36,7 +36,7 @@ class Personne
 		return $this->_password;
 	}
 	public function setPassword($password) {
-		$this->_password = sha1($password);
+		$this->_password = password_hash($password, PASSWORD_BCRYPT);
 	}
 	private function formatNom($str) {
 		$str=mb_strtolower($str);
